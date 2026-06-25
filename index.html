@@ -355,31 +355,6 @@
       filter: saturate(0.9) contrast(1.03) drop-shadow(0 28px 34px rgba(0, 0, 0, 0.42));
     }
 
-    .hero-chips {
-      position: absolute;
-      right: 34px;
-      top: 38px;
-      z-index: 5;
-      display: grid;
-      gap: 10px;
-      width: min(320px, 34vw);
-    }
-
-    .hero-chip {
-      padding: 14px 16px;
-      border-radius: var(--radius);
-      color: var(--text-soft);
-      font-size: 13px;
-      line-height: 1.35;
-    }
-
-    .hero-chip strong {
-      display: block;
-      margin-bottom: 4px;
-      color: #fff;
-      font-weight: 600;
-    }
-
     .stats {
       width: min(100% - 40px, var(--max));
       margin: -42px auto 0;
@@ -390,12 +365,19 @@
       z-index: 8;
       overflow: hidden;
       border-radius: var(--radius);
+      background:
+        linear-gradient(135deg, rgba(255, 255, 255, 0.12), rgba(255, 255, 255, 0.028)),
+        rgba(18, 20, 24, 0.46);
+      backdrop-filter: blur(28px) saturate(145%);
+      box-shadow: 0 26px 70px rgba(0, 0, 0, 0.36);
     }
 
     .stat {
       min-height: 114px;
       padding: 24px;
-      background: rgba(19, 21, 25, 0.86);
+      background:
+        linear-gradient(180deg, rgba(255, 255, 255, 0.068), rgba(255, 255, 255, 0.018)),
+        rgba(18, 20, 24, 0.34);
     }
 
     .stat strong {
@@ -552,7 +534,7 @@
 
     .browser-frame {
       width: 100%;
-      aspect-ratio: 1.24 / 1;
+      aspect-ratio: 16 / 10;
       min-height: 0;
       overflow: hidden;
       border: 1px solid rgba(255, 255, 255, 0.12);
@@ -583,7 +565,7 @@
       height: calc(100% - 34px);
       object-fit: cover;
       object-position: top center;
-      filter: saturate(0.86) contrast(1.04);
+      filter: none;
     }
 
     .project-kicker {
@@ -673,18 +655,15 @@
     }
 
     .capability .number {
-      display: inline-flex;
-      width: 34px;
-      height: 34px;
-      align-items: center;
-      justify-content: center;
-      margin-bottom: 22px;
-      border: 1px solid rgba(255,255,255,0.16);
+      display: block;
+      width: max-content;
+      margin-bottom: 18px;
       color: var(--accent);
       font-family: "Sora", sans-serif;
-      font-size: 12px;
-      font-weight: 520;
-      clip-path: polygon(50% 0, 96% 25%, 96% 75%, 50% 100%, 4% 75%, 4% 25%);
+      font-size: 13px;
+      font-weight: 560;
+      line-height: 1;
+      letter-spacing: 0.08em;
     }
 
     .capability h3 {
@@ -754,10 +733,6 @@
     }
 
     @media (max-width: 1080px) {
-      .hero-chips {
-        display: none;
-      }
-
       .project {
         grid-template-columns: 1fr;
       }
@@ -898,7 +873,7 @@
       }
 
       .browser-frame {
-        aspect-ratio: 1.28 / 1;
+        aspect-ratio: 16 / 10;
       }
 
       .scope-list {
@@ -946,14 +921,9 @@
           </div>
         </div>
 
-        <div class="hero-chips" aria-hidden="true">
-          <div class="hero-chip glass"><strong>Transportation systems</strong>Reservations, quotes, dispatch, providers, agencies, accounts, and payments.</div>
-          <div class="hero-chip glass"><strong>Service-business operations</strong>Quote intake, pricing rules, portals, records, payment requests, and follow-up.</div>
-        </div>
-
         <figure class="portrait-stage" aria-label="Ivan Sadovskyi portrait">
           <div class="portrait-frame" aria-hidden="true"></div>
-          <img src="assets/ivan-sadovskyi-transparent.svg" alt="Ivan Sadovskyi">
+          <img src="assets/ivan-sadovskyi-transparent.webp" alt="Ivan Sadovskyi">
         </figure>
       </div>
     </section>
@@ -1022,7 +992,7 @@
           <div class="project-visual">
             <div class="browser-frame">
               <div class="browser-top"><span class="browser-dot"></span><span class="browser-dot"></span><span class="browser-dot"></span></div>
-              <img src="assets/project-azeum.svg" alt="Azeum website screenshot" loading="lazy">
+              <img src="assets/project-azeum.webp" alt="Azeum website screenshot" loading="eager" decoding="async">
             </div>
           </div>
           <div class="project-copy">
@@ -1052,7 +1022,7 @@
           <div class="project-visual">
             <div class="browser-frame">
               <div class="browser-top"><span class="browser-dot"></span><span class="browser-dot"></span><span class="browser-dot"></span></div>
-              <img src="assets/project-bookalimo.svg" alt="BookALimo website screenshot" loading="lazy">
+              <img src="assets/project-bookalimo.webp" alt="BookALimo website screenshot" loading="eager" decoding="async">
             </div>
           </div>
           <div class="project-copy">
@@ -1082,7 +1052,7 @@
           <div class="project-visual">
             <div class="browser-frame">
               <div class="browser-top"><span class="browser-dot"></span><span class="browser-dot"></span><span class="browser-dot"></span></div>
-              <img src="assets/project-bookamotorcoach.svg" alt="Book A Motorcoach website screenshot" loading="lazy">
+              <img src="assets/project-bookamotorcoach.webp" alt="Book A Motorcoach website screenshot" loading="eager" decoding="async">
             </div>
           </div>
           <div class="project-copy">
@@ -1112,7 +1082,7 @@
           <div class="project-visual">
             <div class="browser-frame">
               <div class="browser-top"><span class="browser-dot"></span><span class="browser-dot"></span><span class="browser-dot"></span></div>
-              <img src="assets/project-metro-surface-solutions.svg" alt="Metro Surface Solutions website screenshot" loading="lazy">
+              <img src="assets/project-metro-surface-solutions.webp" alt="Metro Surface Solutions website screenshot" loading="eager" decoding="async">
             </div>
           </div>
           <div class="project-copy">

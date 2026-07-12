@@ -6,9 +6,12 @@
   <title>Ivan Sadovskyi | Founder, CTO, Principal Engineer</title>
   <meta name="description" content="Ivan Sadovskyi builds business platforms for transportation, reservations, service operations, payments, partner networks, and AI-assisted workflows.">
   <meta name="theme-color" content="#0c0d0f">
+  <link rel="icon" type="image/svg+xml" href="assets/icons/fluent-briefcase-24-filled.svg">
+  <link rel="icon" href="favicon.ico" sizes="16x16 32x32 48x48">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;460;520;600;680&family=Sora:wght@400;460;520;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/vendor/baguettebox/baguetteBox.min.css">
   <style>
     :root {
       color-scheme: dark;
@@ -43,6 +46,7 @@
     body {
       margin: 0;
       min-height: 100vh;
+      overflow-x: clip;
       background:
         linear-gradient(90deg, rgba(255, 255, 255, 0.035) 1px, transparent 1px) 0 0 / 96px 96px,
         linear-gradient(180deg, #0b0c0e 0%, #121418 38%, #0c0d0f 100%);
@@ -111,6 +115,10 @@
       backdrop-filter: blur(22px) saturate(130%);
     }
 
+    .header-plane-blur {
+      display: none;
+    }
+
     .nav {
       width: min(100% - 40px, var(--max));
       min-height: 72px;
@@ -121,28 +129,38 @@
       gap: 24px;
     }
 
-    .brand {
-      display: inline-flex;
+    .header-actions {
+      display: flex;
       align-items: center;
-      gap: 12px;
-      min-width: 0;
-      color: #fff;
-      font-weight: 600;
-      white-space: nowrap;
+      gap: 10px;
     }
 
-    .brand-mark {
-      width: 30px;
-      height: 30px;
+    .header-icon-link {
+      width: 44px;
+      height: 44px;
       display: grid;
       place-items: center;
-      border: 1px solid rgba(255, 255, 255, 0.18);
-      background: linear-gradient(145deg, rgba(255,255,255,0.15), rgba(255,255,255,0.04));
-      color: #f7f4ed;
-      font-family: "Sora", sans-serif;
-      font-size: 11px;
-      font-weight: 600;
-      clip-path: polygon(50% 0, 94% 25%, 94% 75%, 50% 100%, 6% 75%, 6% 25%);
+      flex: 0 0 auto;
+      border: 1px solid rgba(255, 255, 255, 0.14);
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.055);
+      transition: transform 160ms ease, background 160ms ease, border-color 160ms ease;
+    }
+
+    .header-icon-link:hover {
+      transform: translateY(-1px);
+      border-color: rgba(255, 255, 255, 0.28);
+      background: rgba(255, 255, 255, 0.11);
+    }
+
+    .header-icon {
+      width: 18px;
+      height: 18px;
+    }
+
+    a:focus-visible {
+      outline: 2px solid var(--accent);
+      outline-offset: 3px;
     }
 
     .nav-links {
@@ -172,7 +190,6 @@
       overflow: hidden;
       padding: 132px 0 92px;
       border-bottom: 1px solid var(--line-soft);
-      isolation: isolate;
     }
 
     .hero::before {
@@ -183,21 +200,6 @@
       background:
         linear-gradient(108deg, rgba(12, 13, 15, 0.98) 0%, rgba(12, 13, 15, 0.92) 44%, rgba(21, 23, 27, 0.66) 100%),
         repeating-linear-gradient(135deg, rgba(255,255,255,0.035) 0 1px, transparent 1px 18px);
-    }
-
-    .hero::after {
-      content: "";
-      position: absolute;
-      right: -17vw;
-      top: 88px;
-      z-index: -2;
-      width: 58vw;
-      height: 66vh;
-      background:
-        linear-gradient(135deg, rgba(255,255,255,0.1), rgba(255,255,255,0.018)),
-        linear-gradient(180deg, rgba(199,187,166,0.08), transparent);
-      clip-path: polygon(18% 0, 100% 0, 82% 100%, 0 100%);
-      opacity: 0.72;
     }
 
     .hero-inner {
@@ -319,6 +321,7 @@
     .portrait-frame {
       position: absolute;
       inset: 18px 8px 0;
+      z-index: 1;
       background:
         linear-gradient(145deg, rgba(255,255,255,0.19), rgba(255,255,255,0.035)),
         linear-gradient(180deg, #2c3037, #181a1f);
@@ -349,6 +352,7 @@
       position: absolute;
       left: 50%;
       bottom: -18px;
+      z-index: 2;
       width: 105%;
       max-width: none;
       transform: translateX(-50%);
@@ -357,7 +361,7 @@
 
     .stats {
       width: min(100% - 40px, var(--max));
-      margin: -42px auto 0;
+      margin: -78px auto 0;
       display: grid;
       grid-template-columns: repeat(4, 1fr);
       gap: 1px;
@@ -398,7 +402,29 @@
     }
 
     main {
-      overflow: hidden;
+      --hero-plane-top: 0px;
+      --hero-plane-left: 50%;
+      --hero-plane-height: 0px;
+      position: relative;
+      isolation: isolate;
+      overflow-x: clip;
+      overflow-y: visible;
+    }
+
+    main::before {
+      content: "";
+      position: absolute;
+      top: var(--hero-plane-top);
+      left: var(--hero-plane-left);
+      z-index: -2;
+      width: max(720px, 78vw);
+      height: var(--hero-plane-height);
+      pointer-events: none;
+      background:
+        linear-gradient(135deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.018)),
+        linear-gradient(180deg, rgba(199, 187, 166, 0.08), transparent);
+      clip-path: polygon(18% 0, 100% 0, 86% 100%, 0 100%);
+      opacity: 0.72;
     }
 
     .section {
@@ -499,6 +525,10 @@
       gap: 26px;
     }
 
+    #small-food {
+      scroll-margin-top: 92px;
+    }
+
     .project {
       display: grid;
       grid-template-columns: 1fr 1fr;
@@ -534,7 +564,7 @@
 
     .browser-frame {
       width: 100%;
-      aspect-ratio: 16 / 10;
+      aspect-ratio: auto;
       min-height: 0;
       overflow: hidden;
       border: 1px solid rgba(255, 255, 255, 0.12);
@@ -562,10 +592,89 @@
 
     .browser-frame img {
       width: 100%;
-      height: calc(100% - 34px);
-      object-fit: cover;
+      height: auto;
+      aspect-ratio: 16 / 10;
+      object-fit: contain;
       object-position: top center;
       filter: none;
+      transition: transform 320ms cubic-bezier(0.22, 1, 0.36, 1);
+      transform: scale(1);
+      transform-origin: center;
+    }
+
+    .project-image-link {
+      width: 100%;
+      display: block;
+      border-radius: var(--radius);
+      cursor: pointer;
+    }
+
+    .project-image-link:focus-visible {
+      outline: 2px solid var(--accent);
+      outline-offset: 5px;
+    }
+
+    @media (hover: hover) and (pointer: fine) {
+      .project-image-link:hover .browser-frame img {
+        transform: scale(1.025);
+      }
+    }
+
+    #baguetteBox-overlay {
+      background: rgba(7, 8, 10, 0.96) !important;
+      backdrop-filter: blur(16px) saturate(115%);
+    }
+
+    #baguetteBox-overlay .full-image {
+      padding: clamp(18px, 4vw, 52px);
+    }
+
+    #baguetteBox-overlay .full-image img {
+      max-width: 100%;
+      max-height: 100%;
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      border-radius: var(--radius);
+      background: #090a0c;
+      box-shadow: 0 32px 90px rgba(0, 0, 0, 0.62);
+    }
+
+    #baguetteBox-overlay .baguetteBox-button {
+      color: #fff;
+      background: rgba(20, 22, 26, 0.82);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      transition: background 160ms ease, border-color 160ms ease, transform 160ms ease;
+    }
+
+    #baguetteBox-overlay .baguetteBox-button:hover {
+      background: rgba(39, 42, 48, 0.96);
+      border-color: rgba(255, 255, 255, 0.38);
+      transform: scale(1.04);
+    }
+
+    #baguetteBox-overlay #close-button {
+      top: max(16px, env(safe-area-inset-top));
+      right: max(16px, env(safe-area-inset-right));
+      width: 48px;
+      height: 48px;
+      border-radius: 999px;
+    }
+
+    #baguetteBox-overlay #close-button svg {
+      width: 24px;
+      height: 24px;
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, -50%);
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .browser-frame img {
+        transition: none;
+      }
+
+      .project-image-link:hover .browser-frame img {
+        transform: none;
+      }
     }
 
     .project-kicker {
@@ -646,12 +755,6 @@
       border: 1px solid var(--line-soft);
       border-radius: var(--radius);
       background: rgba(255,255,255,0.035);
-    }
-
-    .capability.glass {
-      background:
-        linear-gradient(135deg, rgba(255,255,255,0.1), rgba(255,255,255,0.026)),
-        rgba(24, 26, 31, 0.62);
     }
 
     .capability .number {
@@ -745,30 +848,35 @@
     @media (max-width: 980px) {
       .hero {
         min-height: auto;
-        padding-bottom: 48px;
+        padding-bottom: 56px;
       }
 
       .hero-inner {
-        min-height: 700px;
-        align-items: start;
+        min-height: auto;
+        grid-template-columns: minmax(0, 1fr) minmax(280px, 360px);
+        gap: 34px;
+        align-items: center;
       }
 
       .portrait-stage {
-        right: 50%;
-        bottom: -86px;
-        width: min(86vw, 510px);
-        height: 570px;
-        transform: translateX(50%);
-        opacity: 0.78;
+        position: relative;
+        right: auto;
+        bottom: auto;
+        width: 100%;
+        height: auto;
+        aspect-ratio: 0.82;
+        margin: 0;
+        transform: none;
+        opacity: 1;
       }
 
       .hero-copy {
-        padding-top: 12px;
+        padding-top: 0;
       }
 
       .stats {
         grid-template-columns: repeat(2, 1fr);
-        margin-top: 0;
+        margin-top: -128px;
       }
 
       .section-head,
@@ -784,35 +892,106 @@
 
     @media (max-width: 720px) {
       .site-header {
-        position: static;
+        position: relative;
+        z-index: 40;
+        isolation: isolate;
+        overflow: hidden;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.09);
+        background: rgba(9, 10, 12, 0.42);
+        -webkit-backdrop-filter: blur(42px) saturate(145%);
+        backdrop-filter: blur(42px) saturate(145%);
+        box-shadow: 0 16px 44px rgba(0, 0, 0, 0.22);
+      }
+
+      .header-plane-blur {
+        display: block;
+        position: absolute;
+        inset: -52px;
+        z-index: -1;
+        pointer-events: none;
+        filter: blur(34px);
+      }
+
+      .header-plane-blur::before {
+        content: "";
+        position: absolute;
+        top: 52px;
+        left: calc(var(--header-plane-left, 50%) + 52px);
+        width: max(720px, 78vw);
+        height: var(--header-plane-height, 1200px);
+        background:
+          linear-gradient(135deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.018)),
+          linear-gradient(180deg, rgba(199, 187, 166, 0.08), transparent);
+        clip-path: polygon(18% 0, 100% 0, 86% 100%, 0 100%);
+        transform: scale(1.025);
+        transform-origin: top left;
+        opacity: 0.72;
       }
 
       .nav {
-        width: min(100% - 28px, var(--max));
+        width: 100%;
         min-height: auto;
-        padding: 16px 0;
-        align-items: flex-start;
+        padding: 0;
+        flex-wrap: wrap;
+        align-items: center;
+        gap: 0;
+      }
+
+      .header-actions {
+        width: 100%;
+        min-height: 76px;
+        padding: 16px 14px;
+        border-bottom: 1px solid var(--line-soft);
+        background:
+          linear-gradient(180deg, rgba(255, 255, 255, 0.055), rgba(255, 255, 255, 0.014)),
+          rgba(12, 13, 15, 0.18);
+        -webkit-backdrop-filter: blur(30px) saturate(140%);
+        backdrop-filter: blur(30px) saturate(140%);
       }
 
       .nav-links {
-        display: none;
+        width: 100%;
+        min-height: 66px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: clamp(10px, 4vw, 22px);
+        padding: 10px 14px 12px;
+        border-bottom: 1px solid var(--line-soft);
+        background:
+          linear-gradient(180deg, rgba(255, 255, 255, 0.045), rgba(255, 255, 255, 0.012)),
+          rgba(12, 13, 15, 0.14);
+        -webkit-backdrop-filter: blur(30px) saturate(140%);
+        backdrop-filter: blur(30px) saturate(140%);
+      }
+
+      .nav-links a {
+        min-height: 44px;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 12px;
       }
 
       .hero {
         padding-top: 44px;
+        padding-bottom: 0;
+        overflow: visible;
       }
 
       .hero-inner,
       .section,
       .stats,
       .footer {
-        width: calc(100vw - 28px);
+        width: calc(100% - 28px);
         max-width: var(--max);
       }
 
       .hero-inner {
-        min-height: 790px;
-        overflow: hidden;
+        min-height: auto;
+        grid-template-columns: 1fr;
+        gap: 30px;
+        overflow: visible;
       }
 
       .hero-copy,
@@ -847,14 +1026,16 @@
       }
 
       .portrait-stage {
-        bottom: -248px;
-        width: min(112vw, 520px);
-        height: 560px;
-        opacity: 0.58;
+        width: min(100%, 360px);
+        height: auto;
+        aspect-ratio: 0.82;
+        justify-self: center;
+        opacity: 1;
       }
 
       .stats {
-        grid-template-columns: 1fr;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        margin-top: -72px;
       }
 
       .stat {
@@ -872,8 +1053,12 @@
         padding: 12px;
       }
 
+      #small-food {
+        scroll-margin-top: 16px;
+      }
+
       .browser-frame {
-        aspect-ratio: 16 / 10;
+        aspect-ratio: auto;
       }
 
       .scope-list {
@@ -884,15 +1069,83 @@
         flex-direction: column;
       }
     }
+
+    @media (max-width: 430px) {
+      .nav-links {
+        gap: 8px;
+      }
+
+      .nav-links a {
+        font-size: 11px;
+      }
+
+      .stats {
+        border-radius: 6px;
+      }
+
+      .stat {
+        padding: 20px 18px;
+      }
+    }
+
+    @media (max-width: 340px) {
+      .nav {
+        width: 100%;
+        row-gap: 0;
+      }
+
+      .header-actions {
+        padding-inline: 10px;
+      }
+
+      .nav-links {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 4px;
+        padding: 10px 10px 12px;
+      }
+
+      .nav-links a {
+        min-width: 0;
+        padding: 10px 5px;
+        text-align: center;
+        font-size: 11px;
+      }
+
+      .hero-inner,
+      .section,
+      .stats,
+      .footer {
+        width: calc(100% - 20px);
+      }
+
+      .stat {
+        padding: 18px 14px;
+      }
+
+      .stat strong {
+        white-space: nowrap;
+        font-size: 24px;
+      }
+
+      .stat span {
+        font-size: 12px;
+      }
+    }
   </style>
 </head>
 <body>
   <header class="site-header">
+    <div class="header-plane-blur" aria-hidden="true"></div>
     <nav class="nav" aria-label="Primary navigation">
-      <a class="brand" href="#top" aria-label="Ivan Sadovskyi home">
-        <span class="brand-mark">IS</span>
-        <span>Ivan Sadovskyi</span>
-      </a>
+      <div class="header-actions" aria-label="Contact links">
+        <a class="header-icon-link" href="mailto:ivan@azeum.com" aria-label="Email" title="Email">
+          <img class="header-icon" src="assets/icons/fluent-mail-24-regular.svg" alt="" aria-hidden="true">
+        </a>
+        <a class="header-icon-link" href="https://www.linkedin.com/in/ivan-sadovskyi" aria-label="LinkedIn" title="LinkedIn">
+          <img class="header-icon" src="assets/icons/bootstrap-linkedin.svg" alt="" aria-hidden="true">
+        </a>
+      </div>
       <div class="nav-links">
         <a href="#about">About</a>
         <a href="#projects">Projects</a>
@@ -912,7 +1165,7 @@
           <div class="hero-actions" aria-label="Contact links">
             <a class="button primary" href="mailto:ivan@azeum.com">
               <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 6.5h16v11H4z"></path><path d="m4 7 8 6 8-6"></path></svg>
-              <span>Email Ivan</span>
+              <span>Email</span>
             </a>
             <a class="button" href="https://www.linkedin.com/in/ivan-sadovskyi">
               <svg class="icon icon-fill" viewBox="0 0 24 24" aria-hidden="true"><path d="M6.94 8.86H3.88v10.18h3.06V8.86Zm.25-3.15a1.77 1.77 0 1 0-3.54 0 1.77 1.77 0 0 0 3.54 0Zm12.96 7.49c0-3.02-1.61-4.43-3.76-4.43-1.73 0-2.5.95-2.94 1.62V8.86h-2.94v10.18h3.06v-5.04c0-1.33.25-2.62 1.9-2.62 1.63 0 1.65 1.52 1.65 2.7v4.96h3.06V13.2Z"></path></svg>
@@ -983,17 +1236,19 @@
         <div class="section-label">Selected projects</div>
         <div>
           <h2>Platforms with business weight behind them.</h2>
-          <p class="lead">These projects describe my current work: transportation aggregation, reservation and operations ecosystems, group travel infrastructure, and service-business platforms.</p>
+          <p class="lead">These projects span transportation aggregation, reservation and operations ecosystems, group travel infrastructure, service-business platforms, and a direct-to-consumer business I built and operated in Ukraine.</p>
         </div>
       </div>
 
       <div class="project-list">
         <article class="project">
           <div class="project-visual">
-            <div class="browser-frame">
-              <div class="browser-top"><span class="browser-dot"></span><span class="browser-dot"></span><span class="browser-dot"></span></div>
-              <img src="assets/project-azeum.webp" alt="Azeum website screenshot" loading="eager" decoding="async">
-            </div>
+            <a class="project-image-link" href="assets/project-azeum.webp" data-caption="Azeum website" aria-label="Open Azeum website screenshot full screen">
+              <div class="browser-frame">
+                <div class="browser-top"><span class="browser-dot"></span><span class="browser-dot"></span><span class="browser-dot"></span></div>
+                <img src="assets/project-azeum.webp" alt="Azeum website screenshot" loading="eager" decoding="async">
+              </div>
+            </a>
           </div>
           <div class="project-copy">
             <div class="project-kicker">Ground transportation</div>
@@ -1020,10 +1275,12 @@
 
         <article class="project">
           <div class="project-visual">
-            <div class="browser-frame">
-              <div class="browser-top"><span class="browser-dot"></span><span class="browser-dot"></span><span class="browser-dot"></span></div>
-              <img src="assets/project-bookalimo.webp" alt="BookALimo website screenshot" loading="eager" decoding="async">
-            </div>
+            <a class="project-image-link" href="assets/project-bookalimo.webp" data-caption="BookALimo website" aria-label="Open BookALimo website screenshot full screen">
+              <div class="browser-frame">
+                <div class="browser-top"><span class="browser-dot"></span><span class="browser-dot"></span><span class="browser-dot"></span></div>
+                <img src="assets/project-bookalimo.webp" alt="BookALimo website screenshot" loading="eager" decoding="async">
+              </div>
+            </a>
           </div>
           <div class="project-copy">
             <div class="project-kicker">Reservations and operations</div>
@@ -1050,10 +1307,12 @@
 
         <article class="project">
           <div class="project-visual">
-            <div class="browser-frame">
-              <div class="browser-top"><span class="browser-dot"></span><span class="browser-dot"></span><span class="browser-dot"></span></div>
-              <img src="assets/project-bookamotorcoach.webp" alt="Book A Motorcoach website screenshot" loading="eager" decoding="async">
-            </div>
+            <a class="project-image-link" href="assets/project-bookamotorcoach.webp" data-caption="Book A Motorcoach website" aria-label="Open Book A Motorcoach website screenshot full screen">
+              <div class="browser-frame">
+                <div class="browser-top"><span class="browser-dot"></span><span class="browser-dot"></span><span class="browser-dot"></span></div>
+                <img src="assets/project-bookamotorcoach.webp" alt="Book A Motorcoach website screenshot" loading="eager" decoding="async">
+              </div>
+            </a>
           </div>
           <div class="project-copy">
             <div class="project-kicker">Group travel</div>
@@ -1080,10 +1339,12 @@
 
         <article class="project">
           <div class="project-visual">
-            <div class="browser-frame">
-              <div class="browser-top"><span class="browser-dot"></span><span class="browser-dot"></span><span class="browser-dot"></span></div>
-              <img src="assets/project-metro-surface-solutions.webp?v=20260624-1" alt="Metro Surface Solutions website screenshot" loading="eager" decoding="async">
-            </div>
+            <a class="project-image-link" href="assets/project-metro-surface-solutions.webp?v=20260624-1" data-caption="Metro Surface Solutions website" aria-label="Open Metro Surface Solutions website screenshot full screen">
+              <div class="browser-frame">
+                <div class="browser-top"><span class="browser-dot"></span><span class="browser-dot"></span><span class="browser-dot"></span></div>
+                <img src="assets/project-metro-surface-solutions.webp?v=20260624-1" alt="Metro Surface Solutions website screenshot" loading="eager" decoding="async">
+              </div>
+            </a>
           </div>
           <div class="project-copy">
             <div class="project-kicker">Service business operations</div>
@@ -1107,6 +1368,38 @@
             </div>
           </div>
         </article>
+
+        <article class="project" id="small-food">
+          <div class="project-visual">
+            <a class="project-image-link" href="assets/project-small-food.webp" data-caption="Small Food English ecommerce website" aria-label="Open Small Food website screenshot full screen">
+              <div class="browser-frame">
+                <div class="browser-top"><span class="browser-dot"></span><span class="browser-dot"></span><span class="browser-dot"></span></div>
+                <img src="assets/project-small-food.webp" alt="Small Food English ecommerce website screenshot" loading="lazy" decoding="async">
+              </div>
+            </a>
+          </div>
+          <div class="project-copy">
+            <div class="project-kicker">Direct-to-consumer ecommerce</div>
+            <h3>Small Food</h3>
+            <div class="project-role">Founder, product owner, and full-stack developer · 2021–2022</div>
+            <div class="project-body">
+              <p>Small Food was a Ukrainian ecommerce business selling microgreen growing kits, seeds, and supplies. I built the ASP.NET storefront and operating system from scratch, then ran product, merchandising, fulfillment, customer service, and the day-to-day business.</p>
+              <p>The business was gaining traction until Russia's full-scale invasion of Ukraine caused demand and day-to-day operations to collapse. I closed Small Food in 2022, and I may revive it when the situation in Ukraine becomes stable enough for the business to operate again.</p>
+            </div>
+            <ul class="scope-list">
+              <li>ASP.NET ecommerce platform</li>
+              <li>Catalog, pricing, and order workflows</li>
+              <li>Customer service and fulfillment</li>
+              <li>End-to-end business ownership</li>
+            </ul>
+            <div class="project-actions">
+              <a class="button" href="https://smallfood.com.ua/en/">
+                <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17 17 7"></path><path d="M8 7h9v9"></path></svg>
+                <span>Visit Small Food archive</span>
+              </a>
+            </div>
+          </div>
+        </article>
       </div>
     </section>
 
@@ -1120,7 +1413,7 @@
       </div>
 
       <div class="capability-grid">
-        <article class="capability glass">
+        <article class="capability">
           <span class="number">01</span>
           <h3>Business software architecture</h3>
           <p>Turning reservations, service scopes, partners, providers, accounts, payments, and support workflows into coherent production systems.</p>
@@ -1140,7 +1433,7 @@
           <h3>Payments and communications</h3>
           <p>Checkout, payment requests, webhooks, authorizations, receipts, transactional email, documents, statements, notifications, and follow-up.</p>
         </article>
-        <article class="capability glass">
+        <article class="capability">
           <span class="number">05</span>
           <h3>Portals and operating tools</h3>
           <p>Public flows, customer accounts, partner portals, provider tools, management surfaces, internal dashboards, and release-ready workflows.</p>
@@ -1176,5 +1469,8 @@
     <span>Ivan Sadovskyi</span>
     <a href="https://www.sadovskyi.com">www.sadovskyi.com</a>
   </footer>
+  <script src="assets/vendor/baguettebox/baguetteBox.min.js" defer></script>
+  <script src="assets/js/hero-plane.js" defer></script>
+  <script src="assets/js/project-lightbox.js" defer></script>
 </body>
 </html>

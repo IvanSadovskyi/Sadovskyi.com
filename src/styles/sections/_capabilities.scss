@@ -1,0 +1,124 @@
+@use "../abstracts" as *;
+
+.capability-list {
+  border-top: 1px solid var(--rule-strong);
+}
+
+.capability {
+  position: relative;
+  isolation: isolate;
+  display: grid;
+  grid-template-columns: 52px minmax(0, 1fr);
+  gap: 14px 18px;
+  align-items: center;
+  padding: 28px 0;
+  border-bottom: 1px solid var(--rule);
+
+  @include up(md) {
+    grid-template-columns: 56px 60px minmax(0, 1.05fr) minmax(0, 1fr);
+    gap: 28px;
+    padding: 36px 0;
+  }
+
+  &::before {
+    content: "";
+    position: absolute;
+    inset: 0 calc(-1 * clamp(12px, 2vw, 28px));
+    z-index: -1;
+    border-radius: 20px;
+    background: var(--paper-raised);
+    box-shadow: 0 20px 40px -30px rgb(14 15 18 / 30%);
+    opacity: 0;
+    transform: scaleY(0.8);
+    transition:
+      opacity 0.35s ease,
+      transform 0.55s var(--ease-out);
+  }
+
+  @include hover {
+    &:hover {
+      &::before {
+        opacity: 1;
+        transform: none;
+      }
+
+      .capability__num {
+        color: var(--accent-deep);
+      }
+
+      .capability__icon {
+        border-color: var(--ink);
+        background: var(--ink);
+        color: var(--on-ink);
+        transform: rotate(-8deg);
+      }
+
+      .capability__title {
+        transform: translateX(8px);
+      }
+    }
+  }
+}
+
+.capability__num {
+  color: var(--text-faint);
+  font-family: var(--font-mono);
+  font-size: 0.8125rem;
+  font-weight: 500;
+  letter-spacing: 0.06em;
+  transition: color 0.3s ease;
+
+  @include down(md) {
+    position: absolute;
+    top: 30px;
+    right: 0;
+  }
+}
+
+.capability__icon {
+  display: grid;
+  place-items: center;
+  width: 52px;
+  height: 52px;
+  border: 1px solid var(--rule-strong);
+  border-radius: 16px;
+  color: var(--text);
+  transition:
+    background-color 0.35s ease,
+    border-color 0.35s ease,
+    color 0.35s ease,
+    transform 0.6s var(--ease-out);
+
+  .icon {
+    width: 24px;
+    height: 24px;
+    stroke-width: 1.5;
+  }
+}
+
+.capability__title {
+  padding-right: 40px;
+  font-size: clamp(1.375rem, 2.4vw, 2.25rem);
+  font-weight: 540;
+  letter-spacing: -0.032em;
+  line-height: 1.08;
+  text-wrap: balance;
+  transition: transform 0.6s var(--ease-out);
+
+  @include up(md) {
+    padding-right: 0;
+  }
+}
+
+.capability__text {
+  grid-column: 1 / -1;
+  max-width: 38em;
+  color: var(--text-muted);
+  font-size: 1rem;
+  line-height: 1.6;
+  text-wrap: pretty;
+
+  @include up(md) {
+    grid-column: auto;
+  }
+}

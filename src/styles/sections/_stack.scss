@@ -1,0 +1,209 @@
+@use "../abstracts" as *;
+
+// Exploded isometric diagram of the operating layer.
+// Geometry is expressed in container units of .stack__viewport:
+// plates are 50cqi squares centred at (38cqi, 66cqi); after the isometric
+// rotation a lift of Z moves a plate up by Z * sin(58deg) ≈ Z * 0.848.
+.stack {
+  margin: 0;
+}
+
+.stack__viewport {
+  --gap: 2.2cqi;
+  --cx: 38cqi;
+  --cy: 66cqi;
+
+  position: relative;
+  aspect-ratio: 1 / 0.92;
+  container-type: inline-size;
+
+  .stack.is-open & {
+    --gap: 8.2cqi;
+  }
+}
+
+.stack__floor {
+  position: absolute;
+  top: calc(var(--cy) + 8cqi);
+  left: var(--cx);
+  width: 80cqi;
+  height: 30cqi;
+  border-radius: 50%;
+  background: radial-gradient(closest-side, rgb(14 15 18 / 20%), rgb(14 15 18 / 0%));
+  transform: translate(-50%, -50%);
+  transition: transform 1.2s var(--ease-out);
+
+  .stack.is-open & {
+    transform: translate(-50%, -50%) scale(1.08);
+  }
+}
+
+.stack__scene {
+  position: absolute;
+  top: var(--cy);
+  left: var(--cx);
+  width: 50cqi;
+  height: 50cqi;
+  transform: translate(-50%, -50%) rotateX(58deg) rotateZ(-45deg);
+  transform-style: preserve-3d;
+}
+
+.stack__plate {
+  --lift: 0cqi;
+  --edge: #c7bdab;
+
+  position: absolute;
+  inset: 0;
+  border-radius: 12%;
+  background:
+    radial-gradient(circle, rgb(18 19 22 / 22%) 0 0.22cqi, transparent 0.3cqi) 0 0 / 3.4cqi 3.4cqi,
+    linear-gradient(135deg, #fdfcf9 0%, #ece5d8 100%);
+  box-shadow:
+    inset 0 0 0 1px rgb(18 19 22 / 14%),
+    -1.1cqi 1.1cqi 0 var(--edge),
+    -4cqi 4cqi 6cqi rgb(14 15 18 / 12%);
+  transform: translateZ(calc(var(--i) * var(--gap) + var(--lift)));
+  transition:
+    transform 1.2s var(--ease-out) calc(var(--i) * 70ms),
+    background-color 0.35s ease,
+    box-shadow 0.35s ease;
+
+  .stack.is-settled & {
+    transition-delay: 0s;
+    transition-duration: 0.6s, 0.35s, 0.35s;
+  }
+
+  &[data-stack-plate="0"] {
+    --edge: #07080a;
+
+    background:
+      radial-gradient(circle, rgb(255 255 255 / 20%) 0 0.22cqi, transparent 0.3cqi) 0 0 / 3.4cqi 3.4cqi,
+      linear-gradient(135deg, #2a2d33 0%, #15171a 100%);
+  }
+
+  &.is-active {
+    --lift: 3.2cqi;
+    --edge: var(--accent-deep);
+
+    background:
+      radial-gradient(circle, rgb(255 255 255 / 34%) 0 0.22cqi, transparent 0.3cqi) 0 0 / 3.4cqi 3.4cqi,
+      linear-gradient(135deg, #6c81ff 0%, var(--accent) 100%);
+
+    .stack__ui {
+      stroke: rgb(255 255 255 / 85%);
+
+      rect:not(:first-child) {
+        fill: rgb(255 255 255 / 18%);
+      }
+    }
+  }
+}
+
+.stack__ui {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  fill: none;
+  stroke: rgb(18 19 22 / 55%);
+  stroke-width: 1;
+  vector-effect: non-scaling-stroke;
+
+  rect:first-child {
+    fill: rgb(255 255 255 / 55%);
+  }
+
+  rect:not(:first-child) {
+    fill: rgb(18 19 22 / 5%);
+  }
+
+  circle {
+    fill: currentColor;
+    stroke: none;
+  }
+}
+
+.stack__legend {
+  position: absolute;
+  inset: 0;
+
+  li {
+    position: absolute;
+    top: calc(var(--cy) - var(--i) * var(--gap) * 0.848);
+    left: 76cqi;
+    display: flex;
+    align-items: center;
+    gap: 1.6cqi;
+    color: var(--text-muted);
+    font-size: max(11px, 2.45cqi);
+    font-weight: 580;
+    letter-spacing: -0.01em;
+    line-height: 1;
+    white-space: nowrap;
+    opacity: 0;
+    transform: translateY(-50%);
+    transition:
+      top 1.2s var(--ease-out) calc(var(--i) * 70ms),
+      opacity 0.6s ease calc(0.5s + var(--i) * 70ms),
+      color 0.3s ease;
+
+    &::before {
+      content: "";
+      position: absolute;
+      top: 50%;
+      right: calc(100% + 1cqi);
+      width: 2.6cqi;
+      border-top: 1px solid var(--rule-strong);
+      transition:
+        border-color 0.3s ease,
+        width 0.4s var(--ease-out);
+    }
+
+    span {
+      color: var(--text-faint);
+      font-family: var(--font-mono);
+      font-size: 0.78em;
+      font-weight: 500;
+      letter-spacing: 0.04em;
+    }
+
+    .stack.is-open & {
+      opacity: 1;
+    }
+
+    .stack.is-settled & {
+      transition-delay: 0s;
+    }
+
+    &.is-active {
+      color: var(--text);
+
+      &::before {
+        border-color: var(--accent);
+      }
+
+      span {
+        color: var(--accent-deep);
+      }
+    }
+  }
+}
+
+.stack__caption {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-top: 8px;
+  color: var(--text-faint);
+  font-family: var(--font-mono);
+  font-size: 0.6875rem;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+
+  span {
+    flex: none;
+    color: var(--text);
+    white-space: nowrap;
+  }
+}

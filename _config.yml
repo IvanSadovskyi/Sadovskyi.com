@@ -1,0 +1,7 @@
+# GitHub Pages: publish only the built site, not the build sources.
+exclude:
+  - src/
+  - node_modules/
+  - package.json
+  - package-lock.json
+  - tsconfig.json

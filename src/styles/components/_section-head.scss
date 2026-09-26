@@ -1,0 +1,81 @@
+@use "../abstracts" as *;
+
+.section {
+  padding-block: clamp(96px, 12vw, 176px);
+}
+
+.section-head {
+  display: grid;
+  gap: 24px 56px;
+  margin-bottom: clamp(56px, 7vw, 104px);
+
+  @include up(lg) {
+    grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
+    align-items: end;
+  }
+}
+
+.section-head__index {
+  grid-column: 1 / -1;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-bottom: clamp(12px, 2.4vw, 32px);
+  padding-bottom: 20px;
+  border-bottom: 1px solid var(--rule);
+  color: var(--text-muted);
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  line-height: 1;
+  text-transform: uppercase;
+
+  span {
+    display: inline-grid;
+    place-items: center;
+    min-width: 36px;
+    height: 24px;
+    padding: 0 9px;
+    border: 1px solid var(--rule-strong);
+    border-radius: 999px;
+    color: var(--text);
+  }
+}
+
+.section-head__title {
+  font-size: clamp(2.625rem, 5.7vw, 5.5rem);
+  font-weight: 540;
+  letter-spacing: -0.04em;
+  line-height: 0.98;
+  text-wrap: balance;
+
+  .serif {
+    font-size: 1.07em;
+    line-height: 0.9;
+  }
+}
+
+.section-head__lead {
+  max-width: 34em;
+  color: var(--text-muted);
+  font-size: clamp(1.0625rem, 1.3vw, 1.25rem);
+  line-height: 1.55;
+  text-wrap: pretty;
+}
+
+.section-head--ink {
+  .section-head__index {
+    border-color: var(--rule-ink);
+    color: var(--on-ink-muted);
+
+    span {
+      border-color: var(--rule-ink-strong);
+      color: var(--on-ink);
+    }
+  }
+
+  .section-head__lead {
+    color: var(--on-ink-muted);
+  }
+}

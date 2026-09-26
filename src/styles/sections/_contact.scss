@@ -1,0 +1,166 @@
+@use "../abstracts" as *;
+
+.contact {
+  overflow: clip;
+  padding-block: clamp(96px, 13vw, 184px) clamp(72px, 9vw, 128px);
+
+  .section-head__index {
+    border-color: var(--rule-ink);
+    color: var(--on-ink-muted);
+
+    span {
+      border-color: var(--rule-ink-strong);
+      color: var(--on-ink);
+    }
+  }
+}
+
+// Sized so the glow fades out before the footer seam.
+.contact__glow {
+  position: absolute;
+  right: -8%;
+  bottom: -14%;
+  z-index: -1;
+  width: min(90vw, 1000px);
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background: radial-gradient(closest-side, color-mix(in oklab, var(--accent) 40%, transparent), color-mix(in oklab, var(--accent) 11%, transparent) 50%, transparent 72%);
+  pointer-events: none;
+}
+
+.contact__inner {
+  position: relative;
+}
+
+.contact__title {
+  max-width: 15.5em;
+  margin-top: clamp(20px, 3vw, 36px);
+  font-size: clamp(2.5rem, 6vw, 5.75rem);
+  font-weight: 540;
+  letter-spacing: -0.04em;
+  line-height: 0.98;
+  text-wrap: balance;
+
+  .serif {
+    font-size: 1.07em;
+    line-height: 0.9;
+  }
+}
+
+.contact__lead {
+  max-width: 33em;
+  margin-top: 28px;
+  color: var(--on-ink-muted);
+  font-size: clamp(1.0625rem, 1.3vw, 1.25rem);
+  line-height: 1.55;
+  text-wrap: pretty;
+}
+
+.contact__email {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.28em;
+  max-width: 100%;
+  margin-top: clamp(44px, 6vw, 80px);
+  color: var(--on-ink);
+  font-size: clamp(2.35rem, 9.4vw, 8.75rem);
+  font-weight: 500;
+  letter-spacing: -0.05em;
+  line-height: 1;
+}
+
+.contact__email-text {
+  padding-bottom: 0.06em;
+  background: linear-gradient(var(--accent-bright), var(--accent-bright)) 0 100% / 0 0.035em no-repeat;
+  transition: background-size 0.7s var(--ease-out);
+}
+
+.contact__email-arrow {
+  display: grid;
+  place-items: center;
+  width: 0.72em;
+  height: 0.72em;
+  flex: none;
+  border-radius: 50%;
+  background: var(--accent);
+  color: #fff;
+  transition: transform 0.6s var(--ease-out);
+
+  .icon {
+    width: 44%;
+    height: 44%;
+    stroke-width: 2.2;
+  }
+}
+
+@include hover {
+  .contact__email:hover {
+    .contact__email-text {
+      background-size: 100% 0.035em;
+    }
+
+    .contact__email-arrow {
+      transform: rotate(45deg) scale(1.04);
+    }
+  }
+}
+
+.contact__links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: clamp(36px, 4vw, 52px);
+
+  @include down(sm) {
+    .button {
+      flex: 1 1 100%;
+    }
+  }
+
+  .is-copied {
+    --btn-bg: #d9f2e2;
+    --btn-fg: #0f5f31;
+  }
+}
+
+.footer {
+  border-top: 1px solid var(--rule-ink);
+}
+
+.footer__inner {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px 28px;
+  padding-block: 28px calc(28px + env(safe-area-inset-bottom, 0px));
+  color: var(--on-ink-faint);
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+
+  a {
+    transition: color 0.25s ease;
+
+    &:hover {
+      color: var(--on-ink);
+    }
+  }
+}
+
+.footer__name {
+  color: var(--on-ink);
+}
+
+.footer__top {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+
+  .icon {
+    width: 15px;
+    height: 15px;
+  }
+}

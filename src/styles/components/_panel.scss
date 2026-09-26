@@ -1,0 +1,29 @@
+@use "../abstracts" as *;
+
+.panel {
+  position: relative;
+  isolation: isolate;
+  margin-inline: var(--panel-inset);
+  border-radius: var(--panel-radius);
+}
+
+.panel--ink {
+  background: var(--ink) $grain-ink repeat;
+  background-size: 180px 180px;
+  color: var(--on-ink);
+
+  .dot {
+    color: var(--accent-bright);
+  }
+}
+
+.panel--top {
+  border-bottom-right-radius: 0;
+  border-bottom-left-radius: 0;
+}
+
+.panel--bottom {
+  margin-bottom: var(--panel-inset);
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
+}

@@ -1,0 +1,19 @@
+{
+  "name": "sadovskyi-com",
+  "private": true,
+  "description": "Static personal site for www.sadovskyi.com. Sources in src/, built assets in assets/css and assets/js.",
+  "type": "module",
+  "scripts": {
+    "build": "npm run build:css && npm run build:js",
+    "build:css": "sass src/styles/main.scss assets/css/site.css --style=compressed --no-source-map",
+    "build:js": "npm run typecheck && esbuild src/scripts/main.ts --bundle --minify --format=iife --target=es2020 --outfile=assets/js/site.js",
+    "typecheck": "tsc --noEmit -p tsconfig.json",
+    "watch:css": "sass --watch src/styles/main.scss assets/css/site.css --no-source-map",
+    "watch:js": "esbuild src/scripts/main.ts --bundle --format=iife --target=es2020 --outfile=assets/js/site.js --watch"
+  },
+  "devDependencies": {
+    "esbuild": "0.28.2",
+    "sass": "1.105.0",
+    "typescript": "7.0.2"
+  }
+}

@@ -1,0 +1,318 @@
+@use "../abstracts" as *;
+
+.projects {
+  padding-bottom: clamp(20px, 3vw, 48px);
+}
+
+// Cards stack on top of each other while scrolling when every card fits the
+// viewport; JavaScript decides by toggling .is-stacked.
+.deck {
+  display: grid;
+  gap: clamp(20px, 3vw, 36px);
+}
+
+.case {
+  --pad: clamp(22px, 3vw, 42px);
+  --radius: clamp(22px, 2.4vw, 32px);
+
+  position: relative;
+  display: grid;
+  gap: 36px;
+  padding: var(--pad);
+  overflow: hidden;
+  border: 1px solid var(--rule-ink);
+  border-radius: var(--radius);
+  background:
+    radial-gradient(70% 90% at 92% 34%, color-mix(in oklab, var(--hue) 30%, transparent), transparent 72%),
+    radial-gradient(40% 50% at 8% 100%, color-mix(in oklab, var(--hue) 10%, transparent), transparent 70%),
+    linear-gradient(180deg, #181a1f 0%, #111216 100%);
+  box-shadow: 0 -30px 60px -40px rgb(0 0 0 / 80%);
+  transform-origin: 50% 0;
+
+  @include up(lg) {
+    grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
+    align-items: center;
+    gap: clamp(36px, 4.4vw, 72px);
+  }
+
+  &::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    background: #050607;
+    opacity: calc(var(--cover, 0) * 0.6);
+    pointer-events: none;
+  }
+}
+
+.deck.is-stacked .case {
+  position: sticky;
+  top: calc(var(--header-top) + var(--header-h) + 16px + var(--i) * 12px);
+  transform: scale(calc(1 - var(--cover, 0) * 0.05));
+}
+
+.case__body {
+  position: relative;
+  z-index: 1;
+  min-width: 0;
+}
+
+.case__meta {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  color: var(--on-ink-muted);
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  line-height: 1.2;
+  text-transform: uppercase;
+}
+
+.case__kicker {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+
+  &::before {
+    content: "";
+    width: 8px;
+    height: 8px;
+    flex: none;
+    border-radius: 50%;
+    background: var(--hue);
+    box-shadow: 0 0 0 4px color-mix(in oklab, var(--hue) 24%, transparent);
+  }
+}
+
+.case__count {
+  color: var(--on-ink);
+
+  span {
+    color: var(--on-ink-faint);
+  }
+}
+
+.case__title {
+  margin-top: clamp(18px, 2.2vw, 26px);
+  font-size: clamp(2.375rem, 3.9vw, 3.5rem);
+  font-weight: 560;
+  letter-spacing: -0.042em;
+  line-height: 0.98;
+  text-wrap: balance;
+}
+
+.case__role {
+  margin-top: 12px;
+  color: var(--on-ink);
+  font-size: 1.0625rem;
+  font-weight: 520;
+  letter-spacing: -0.01em;
+  line-height: 1.4;
+  opacity: 0.92;
+}
+
+.case__text {
+  display: grid;
+  gap: 12px;
+  margin-top: 18px;
+  color: var(--on-ink-muted);
+  font-size: 0.953rem;
+  line-height: 1.6;
+  text-wrap: pretty;
+}
+
+.case__scope {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px 20px;
+  margin-top: 22px;
+  padding-top: 20px;
+  border-top: 1px solid var(--rule-ink);
+
+  @include down(sm) {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  li {
+    position: relative;
+    padding-left: 20px;
+    color: var(--on-ink);
+    font-size: 0.8438rem;
+    font-weight: 500;
+    line-height: 1.4;
+
+    &::before {
+      content: "";
+      position: absolute;
+      top: 0.42em;
+      left: 0;
+      width: 8px;
+      height: 8px;
+      border: 1.6px solid var(--hue);
+      border-radius: 50%;
+    }
+  }
+}
+
+.case__link {
+  min-height: 48px;
+  margin-top: 24px;
+
+  @include down(sm) {
+    width: 100%;
+  }
+}
+
+.case__visual {
+  position: relative;
+  z-index: 1;
+  min-width: 0;
+
+  @include down(lg) {
+    order: -1;
+  }
+
+  @include up(lg) {
+    margin-right: calc(-1 * var(--pad) - 10%);
+  }
+}
+
+// Screenshot in a browser frame. An empty overlay link opens the lightbox so
+// the frame's decorative text stays out of the link's accessible name.
+.shot {
+  position: relative;
+  display: block;
+  border-radius: 16px;
+}
+
+.shot__link {
+  position: absolute;
+  inset: 0;
+  z-index: 3;
+  border-radius: 16px;
+  cursor: zoom-in;
+
+  &:focus-visible {
+    outline-offset: 6px;
+  }
+}
+
+.shot__frame {
+  display: block;
+  overflow: hidden;
+  border-radius: 14px;
+  background: #0b0c0e;
+  box-shadow:
+    0 0 0 1px rgb(255 255 255 / 11%),
+    0 50px 100px -30px rgb(0 0 0 / 75%),
+    0 30px 80px -40px color-mix(in oklab, var(--hue) 60%, transparent);
+  transition: transform 0.7s var(--ease-out);
+
+  @include up(lg) {
+    border-radius: 14px 0 0 14px;
+  }
+
+  img {
+    width: 100%;
+    aspect-ratio: 16 / 10;
+    object-fit: cover;
+    object-position: top center;
+    transition: transform 0.9s var(--ease-out);
+  }
+}
+
+.shot__bar {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  height: 38px;
+  padding: 0 14px;
+  border-bottom: 1px solid rgb(255 255 255 / 6%);
+  background: linear-gradient(180deg, #202227, #1a1c20);
+}
+
+.shot__dots {
+  display: flex;
+  gap: 6px;
+
+  i {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: rgb(255 255 255 / 16%);
+  }
+}
+
+.shot__url {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  height: 24px;
+  padding: 0 12px 0 10px;
+  border-radius: 7px;
+  background: rgb(255 255 255 / 6%);
+  color: var(--on-ink-muted);
+  font-family: var(--font-mono);
+  font-size: 0.6875rem;
+  letter-spacing: 0.02em;
+
+  .icon {
+    width: 11px;
+    height: 11px;
+    stroke-width: 2;
+  }
+}
+
+.shot__hint {
+  position: absolute;
+  bottom: 16px;
+  left: 16px;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 9px 14px 9px 12px;
+  border: 1px solid rgb(255 255 255 / 12%);
+  border-radius: 999px;
+  background: rgb(14 15 18 / 72%);
+  color: var(--on-ink);
+  font-size: 0.75rem;
+  font-weight: 580;
+  opacity: 0;
+  transform: translateY(8px);
+  transition:
+    opacity 0.35s ease,
+    transform 0.5s var(--ease-out);
+  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(10px);
+
+  .icon {
+    width: 14px;
+    height: 14px;
+  }
+}
+
+@include hover {
+  .shot:hover {
+    .shot__frame {
+      transform: translateY(-6px);
+    }
+
+    img {
+      transform: scale(1.025);
+    }
+
+    .shot__hint {
+      opacity: 1;
+      transform: none;
+    }
+  }
+}
+
+.shot:has(.shot__link:focus-visible) .shot__hint {
+  opacity: 1;
+  transform: none;
+}

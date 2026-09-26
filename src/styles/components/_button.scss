@@ -1,0 +1,149 @@
+@use "../abstracts" as *;
+
+.button {
+  --btn-bg: transparent;
+  --btn-fg: currentColor;
+  --btn-border: transparent;
+  --btn-fill: var(--accent);
+  --btn-fg-hover: #fff;
+
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  min-height: 52px;
+  padding: 0 24px;
+  overflow: hidden;
+  isolation: isolate;
+  border: 1px solid var(--btn-border);
+  border-radius: 999px;
+  background: var(--btn-bg);
+  color: var(--btn-fg);
+  font-size: 0.9375rem;
+  font-weight: 580;
+  letter-spacing: -0.01em;
+  line-height: 1;
+  white-space: nowrap;
+  cursor: pointer;
+  transition:
+    transform 0.45s var(--ease-out),
+    color 0.3s ease,
+    border-color 0.3s ease,
+    background-color 0.3s ease;
+
+  &::before {
+    content: "";
+    position: absolute;
+    inset: -1px;
+    z-index: -1;
+    border-radius: inherit;
+    background: var(--btn-fill);
+    transform: translateY(102%);
+    transition: transform 0.5s var(--ease-out);
+  }
+
+  @include hover {
+    &:hover {
+      color: var(--btn-fg-hover);
+      transform: translateY(-2px);
+
+      &::before {
+        transform: none;
+      }
+
+      .button__arrow {
+        transform: translateX(3px);
+        background: rgb(255 255 255 / 20%);
+      }
+    }
+  }
+
+  &:active {
+    transform: scale(0.98);
+  }
+}
+
+.button__arrow {
+  display: grid;
+  place-items: center;
+  width: 30px;
+  height: 30px;
+  margin-right: -12px;
+  border-radius: 50%;
+  background: rgb(255 255 255 / 12%);
+  transition:
+    transform 0.5s var(--ease-out),
+    background-color 0.3s ease;
+
+  .icon {
+    width: 15px;
+    height: 15px;
+    stroke-width: 1.9;
+  }
+}
+
+.button--ink {
+  --btn-bg: var(--ink);
+  --btn-fg: var(--on-ink);
+}
+
+.button--outline {
+  --btn-border: var(--rule-strong);
+  --btn-fg: var(--text);
+  --btn-fill: var(--ink);
+  --btn-fg-hover: var(--on-ink);
+}
+
+.button--light {
+  --btn-bg: var(--on-ink);
+  --btn-fg: var(--ink);
+}
+
+.button--outline-light {
+  --btn-border: var(--rule-ink-strong);
+  --btn-fg: var(--on-ink);
+  --btn-fill: var(--on-ink);
+  --btn-fg-hover: var(--ink);
+}
+
+.button--compact {
+  min-height: 40px;
+  padding: 0 16px;
+  gap: 8px;
+  font-size: 0.875rem;
+
+  .icon {
+    width: 16px;
+    height: 16px;
+  }
+}
+
+.icon-button {
+  display: grid;
+  place-items: center;
+  width: 40px;
+  height: 40px;
+  flex: none;
+  border: 1px solid var(--rule-strong);
+  border-radius: 50%;
+  transition:
+    background-color 0.3s ease,
+    border-color 0.3s ease,
+    color 0.3s ease,
+    transform 0.45s var(--ease-out);
+
+  .icon {
+    width: 17px;
+    height: 17px;
+  }
+
+  @include hover {
+    &:hover {
+      background: var(--ink);
+      border-color: var(--ink);
+      color: var(--on-ink);
+      transform: translateY(-2px);
+    }
+  }
+}

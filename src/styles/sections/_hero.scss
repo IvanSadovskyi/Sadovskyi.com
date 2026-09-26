@@ -1,0 +1,436 @@
+@use "../abstracts" as *;
+
+.hero {
+  position: relative;
+  isolation: isolate;
+  padding-top: calc(var(--header-top) + var(--header-h) + clamp(40px, 8vh, 104px));
+  padding-bottom: clamp(28px, 4vh, 44px);
+  overflow: clip;
+
+  &::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    background-image: radial-gradient(rgb(18 19 22 / 17%) 1px, transparent 1.4px);
+    background-size: 24px 24px;
+    -webkit-mask-image: radial-gradient(46% 58% at 80% 44%, #000 0%, transparent 74%);
+    mask-image: radial-gradient(46% 58% at 80% 44%, #000 0%, transparent 74%);
+    pointer-events: none;
+
+    @include down(lg) {
+      -webkit-mask-image: radial-gradient(70% 36% at 50% 72%, #000 0%, transparent 74%);
+      mask-image: radial-gradient(70% 36% at 50% 72%, #000 0%, transparent 74%);
+    }
+  }
+}
+
+.hero__grid {
+  display: grid;
+  gap: clamp(64px, 8vw, 88px);
+  align-items: end;
+
+  @include up(lg) {
+    grid-template-columns: minmax(0, 1.3fr) minmax(0, 0.7fr);
+    gap: clamp(40px, 5vw, 72px);
+  }
+}
+
+.hero__copy {
+  min-width: 0;
+}
+
+.hero__eyebrow {
+  margin-bottom: clamp(22px, 3.4vh, 34px);
+}
+
+.hero__title {
+  font-size: clamp(3.15rem, 7.7vw, 7.1rem);
+  font-weight: 560;
+  letter-spacing: -0.042em;
+  line-height: 0.9;
+
+  @include down(lg) {
+    font-size: clamp(3.15rem, 10.4vw, 6rem);
+  }
+
+  .word {
+    display: inline-block;
+    clip-path: inset(-0.3em -0.25em -0.18em -0.25em);
+
+    > span {
+      display: inline-block;
+    }
+  }
+
+  .word--serif {
+    font-family: var(--font-serif);
+    font-size: 1.1em;
+    font-style: italic;
+    font-weight: 400;
+    letter-spacing: -0.025em;
+    line-height: 0.82;
+  }
+}
+
+.hero__lead {
+  max-width: 33em;
+  margin-top: clamp(26px, 3.6vh, 38px);
+  color: var(--text-muted);
+  font-size: clamp(1.0625rem, 1.3vw, 1.3125rem);
+  line-height: 1.55;
+  text-wrap: pretty;
+}
+
+.hero__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: clamp(28px, 4vh, 40px);
+
+  @include down(sm) {
+    .button {
+      flex: 1 1 auto;
+    }
+  }
+}
+
+// Portrait: an arch window with the head rising above its edge.
+.portrait {
+  position: relative;
+  justify-self: end;
+  width: 100%;
+  max-width: 470px;
+
+  @include down(lg) {
+    justify-self: center;
+    width: min(88%, 420px);
+  }
+}
+
+.portrait__stage {
+  position: relative;
+  aspect-ratio: 4 / 5;
+  container-type: inline-size;
+}
+
+.portrait__arch,
+.portrait__clip {
+  position: absolute;
+  inset: 0;
+  border-radius: 50cqi 50cqi 28px 28px;
+}
+
+.portrait__arch {
+  background:
+    radial-gradient(72% 44% at 50% 30%, rgb(86 118 190 / 55%), rgb(86 118 190 / 0%) 72%),
+    radial-gradient(60% 30% at 50% 100%, color-mix(in oklab, var(--accent-bright) 22%, transparent), transparent 70%),
+    linear-gradient(180deg, var(--navy) 0%, var(--navy-deep) 80%);
+  box-shadow:
+    0 1px 0 rgb(255 255 255 / 8%) inset,
+    0 60px 90px -44px rgb(11 20 40 / 75%);
+
+  &::before {
+    content: "";
+    position: absolute;
+    inset: 14px;
+    border: 1px solid rgb(255 255 255 / 10%);
+    border-radius: calc(50cqi - 14px) calc(50cqi - 14px) 16px 16px;
+  }
+}
+
+.portrait__clip {
+  overflow: hidden;
+}
+
+// --mx / --my (-1..1) come from the parallax script. The image extends below
+// the arch so a drift never exposes its cut edge.
+.portrait__img,
+.portrait__pop {
+  position: absolute;
+  bottom: -12px;
+  left: 50%;
+  width: 127%;
+  max-width: none;
+  transform: translateX(-50%);
+  translate: calc(var(--mx, 0) * 9px) calc(var(--my, 0) * 7px);
+}
+
+.portrait__pop {
+  clip-path: inset(0 0 84% 0);
+  pointer-events: none;
+}
+
+.trip-card {
+  position: absolute;
+  bottom: 11%;
+  left: -20%;
+  z-index: 2;
+  display: grid;
+  gap: 12px;
+  width: 236px;
+  padding: 16px 18px 17px 16px;
+  border: 1px solid rgb(18 19 22 / 6%);
+  border-radius: 20px;
+  background: rgb(255 255 255 / 92%);
+  box-shadow:
+    0 28px 60px -22px rgb(14 15 18 / 40%),
+    0 2px 6px rgb(14 15 18 / 6%);
+  color: var(--text);
+  translate: calc(var(--mx, 0) * -16px) calc(var(--my, 0) * -11px);
+  -webkit-backdrop-filter: blur(14px);
+  backdrop-filter: blur(14px);
+
+  @include down(xl) {
+    left: -10%;
+  }
+
+  @include down(lg) {
+    left: -8%;
+    bottom: 9%;
+  }
+
+  @include down(sm) {
+    left: -5%;
+    width: 214px;
+    padding: 14px 16px 15px 14px;
+  }
+}
+
+.trip-card__status {
+  position: absolute;
+  top: -11px;
+  right: 16px;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 5px 9px;
+  border: 1px solid #fff;
+  border-radius: 999px;
+  background: #e2f3e8;
+  box-shadow: 0 6px 14px -6px rgb(19 115 60 / 45%);
+  color: #13733c;
+  font-family: var(--font-mono);
+  font-size: 0.625rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+
+  &::before {
+    content: "";
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: currentColor;
+  }
+}
+
+.trip-card__row {
+  position: relative;
+  display: grid;
+  grid-template-columns: 14px auto;
+  grid-template-rows: auto auto;
+  column-gap: 12px;
+  align-items: center;
+
+  & + & {
+    padding-top: 2px;
+  }
+
+  &:first-of-type::after {
+    content: "";
+    position: absolute;
+    top: 22px;
+    left: 6px;
+    height: calc(100% + 2px);
+    border-left: 1.5px dashed rgb(18 19 22 / 28%);
+  }
+}
+
+.trip-card__stop {
+  grid-row: 1 / 3;
+  width: 13px;
+  height: 13px;
+  border-radius: 50%;
+}
+
+.trip-card__stop--from {
+  border: 2.5px solid var(--ink);
+  background: #fff;
+}
+
+.trip-card__stop--to {
+  background: var(--accent);
+  box-shadow: 0 0 0 4px color-mix(in oklab, var(--accent) 18%, transparent);
+}
+
+.trip-card__label {
+  color: var(--text-faint);
+  font-family: var(--font-mono);
+  font-size: 0.625rem;
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  line-height: 1.4;
+  text-transform: uppercase;
+}
+
+.trip-card__value {
+  font-size: 0.9375rem;
+  font-weight: 620;
+  letter-spacing: -0.015em;
+  line-height: 1.25;
+}
+
+// Quick index of the selected work.
+.hero__index {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 14px 32px;
+  margin-top: clamp(44px, 7vh, 76px);
+  padding-top: 22px;
+  border-top: 1px solid var(--rule);
+}
+
+.hero__index-label {
+  color: var(--text-faint);
+  font-family: var(--font-mono);
+  font-size: 0.6875rem;
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.hero__index-list {
+  display: flex;
+  flex: 1 1 auto;
+  flex-wrap: wrap;
+  gap: 8px;
+  font-size: 0.9375rem;
+  font-weight: 560;
+  letter-spacing: -0.01em;
+
+  li {
+    display: inline-flex;
+    align-items: center;
+  }
+
+  a {
+    display: inline-flex;
+    align-items: center;
+    min-height: 38px;
+    padding: 0 14px;
+    border: 1px solid var(--rule-strong);
+    border-radius: 999px;
+    transition:
+      background-color 0.3s ease,
+      border-color 0.3s ease,
+      color 0.3s ease;
+
+    &:hover {
+      border-color: var(--ink);
+      background: var(--ink);
+      color: var(--on-ink);
+    }
+  }
+
+  // Wide screens fit the list on one line, so it reads as plain text.
+  @include up(lg) {
+    gap: 0;
+
+    li + li::before {
+      content: "/";
+      margin-inline: 14px;
+      color: var(--text-faint);
+      font-weight: 400;
+      opacity: 0.6;
+    }
+
+    a {
+      min-height: 0;
+      padding: 0 0 2px;
+      border: 0;
+      border-radius: 0;
+      background: linear-gradient(currentColor, currentColor) 0 100% / 0 1px no-repeat;
+      transition: background-size 0.5s var(--ease-out);
+
+      &:hover {
+        background-color: transparent;
+        background-size: 100% 1px;
+        color: inherit;
+      }
+    }
+  }
+}
+
+.hero__scroll {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  margin-left: auto;
+  color: var(--text-faint);
+  font-family: var(--font-mono);
+  font-size: 0.6875rem;
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  transition: color 0.25s ease;
+
+  .icon {
+    width: 16px;
+    height: 16px;
+    animation: nudge 2.2s var(--ease-in-out) infinite;
+  }
+
+  &:hover {
+    color: var(--text);
+  }
+
+  @include down(md) {
+    display: none;
+  }
+}
+
+// Entrance choreography. Runs on load without waiting for JavaScript.
+.js .hero {
+  .word > span {
+    animation: rise 1.25s var(--ease-out) both;
+    animation-delay: calc(0.12s + var(--w, 0) * 0.075s);
+  }
+
+  @for $i from 1 through 5 {
+    .word:nth-child(#{$i}) {
+      --w: #{$i - 1};
+    }
+  }
+
+  [data-hero-item] {
+    animation: fade-up 1s var(--ease-out) both;
+  }
+
+  .hero__eyebrow {
+    animation-delay: 0.05s;
+  }
+
+  .hero__lead {
+    animation-delay: 0.52s;
+  }
+
+  .hero__actions {
+    animation-delay: 0.64s;
+  }
+
+  .hero__index {
+    animation-delay: 0.85s;
+  }
+
+  [data-hero-portrait] {
+    animation: portrait-in 1.4s var(--ease-out) 0.2s both;
+  }
+
+  .trip-card {
+    animation:
+      fade-up 0.9s var(--ease-out) 1.05s both,
+      float 7s var(--ease-in-out) 2.2s infinite;
+  }
+}

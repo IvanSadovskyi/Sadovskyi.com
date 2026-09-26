@@ -1,0 +1,46 @@
+:root {
+  color-scheme: light;
+
+  // Surfaces
+  --paper: #f2eee6;
+  --paper-raised: #f8f5ef;
+  --ink: #0e0f12;
+
+  // Text on paper
+  --text: #121316;
+  --text-muted: #4d4a44;
+  --text-faint: #6c675e;
+  --rule: rgb(18 19 22 / 11%);
+  --rule-strong: rgb(18 19 22 / 20%);
+
+  // Text on ink
+  --on-ink: #f3efe7;
+  --on-ink-muted: #b6b1a7;
+  --on-ink-faint: #858076;
+  --rule-ink: rgb(243 239 231 / 9%);
+  --rule-ink-strong: rgb(243 239 231 / 18%);
+
+  // Signal: cobalt on paper, a brighter tint for small marks on ink.
+  --accent: #2f4bff;
+  --accent-deep: #1f33c7;
+  --accent-bright: #7a8cff;
+  --navy: #1c2d50;
+  --navy-deep: #0c1529;
+
+  // Type
+  --font-sans: "Inter Tight", ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  --font-serif: "Instrument Serif", "Iowan Old Style", "Palatino Linotype", Georgia, serif;
+  --font-mono: "JetBrains Mono", ui-monospace, "SFMono-Regular", Menlo, Consolas, monospace;
+
+  // Layout
+  --max: 1320px;
+  --gutter: clamp(20px, 4.5vw, 64px);
+  --panel-inset: clamp(8px, 1.1vw, 16px);
+  --panel-radius: clamp(24px, 3vw, 40px);
+  --header-top: 12px;
+  --header-h: 62px;
+
+  // Motion
+  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
+}

@@ -1,0 +1,205 @@
+@use "../abstracts" as *;
+
+// Departure-board strip with split-flap figures.
+.board {
+  overflow: clip;
+}
+
+.board__ticker {
+  overflow: hidden;
+  border-bottom: 1px solid var(--rule-ink);
+  -webkit-mask-image: linear-gradient(90deg, transparent, #000 7%, #000 93%, transparent);
+  mask-image: linear-gradient(90deg, transparent, #000 7%, #000 93%, transparent);
+}
+
+.board__ticker-track {
+  display: flex;
+  width: max-content;
+  animation: marquee 46s linear infinite;
+
+  ul {
+    display: flex;
+    flex: none;
+  }
+
+  li {
+    display: inline-flex;
+    align-items: center;
+    padding: 21px 0;
+    color: var(--on-ink-muted);
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    font-weight: 500;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    white-space: nowrap;
+
+    &::after {
+      content: "";
+      width: 6px;
+      height: 6px;
+      margin-inline: 30px;
+      border-radius: 50%;
+      background: var(--accent-bright);
+    }
+  }
+
+  @include hover {
+    .board__ticker:hover & {
+      animation-play-state: paused;
+    }
+  }
+}
+
+.board__grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+
+  @include up(lg) {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+}
+
+.board__cell {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  padding: clamp(28px, 4vw, 52px) clamp(14px, 2.2vw, 32px) clamp(32px, 4.4vw, 56px);
+
+  @include down(lg) {
+    &:nth-child(odd) {
+      padding-left: 0;
+    }
+
+    &:nth-child(even) {
+      border-left: 1px solid var(--rule-ink);
+    }
+
+    &:nth-child(n + 3) {
+      border-top: 1px solid var(--rule-ink);
+    }
+  }
+
+  @include up(lg) {
+    & + & {
+      border-left: 1px solid var(--rule-ink);
+    }
+
+    &:first-child {
+      padding-left: 0;
+    }
+  }
+}
+
+.board__value {
+  line-height: 1;
+}
+
+.board__label {
+  max-width: 22ch;
+  color: var(--on-ink-muted);
+  font-size: 0.9375rem;
+  line-height: 1.45;
+  text-wrap: pretty;
+}
+
+.flap {
+  --tile-bg-top: #26292f;
+  --tile-bg-bottom: #1b1d22;
+
+  display: inline-flex;
+  gap: 0.07em;
+  color: var(--on-ink);
+  font-size: clamp(2.1rem, 4.1vw, 3.9rem);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  line-height: 1;
+}
+
+.flap__tile {
+  position: relative;
+  display: block;
+  width: 0.78em;
+  height: 1.12em;
+  border-radius: 0.1em;
+  background: var(--tile-bg-bottom);
+  box-shadow:
+    0 0.03em 0 rgb(0 0 0 / 70%),
+    0 0.22em 0.4em -0.12em rgb(0 0 0 / 55%);
+  perspective: 2.4em;
+
+  // Split line and hinges.
+  &::before {
+    content: "";
+    position: absolute;
+    top: 50%;
+    right: 0;
+    left: 0;
+    z-index: 4;
+    height: 0.03em;
+    margin-top: -0.015em;
+    background: rgb(0 0 0 / 78%);
+    box-shadow: 0 0.015em 0 rgb(255 255 255 / 5%);
+  }
+
+  &::after {
+    content: "";
+    position: absolute;
+    top: 50%;
+    right: -0.02em;
+    left: -0.02em;
+    z-index: 5;
+    height: 0.16em;
+    margin-top: -0.08em;
+    border-inline: 0.05em solid #08090b;
+    pointer-events: none;
+  }
+}
+
+.flap__half {
+  position: absolute;
+  right: 0;
+  left: 0;
+  height: 50%;
+  overflow: hidden;
+  backface-visibility: hidden;
+
+  > span {
+    position: absolute;
+    right: 0;
+    left: 0;
+    display: grid;
+    place-items: center;
+    height: 200%;
+  }
+}
+
+.flap__half--top {
+  top: 0;
+  border-radius: 0.1em 0.1em 0 0;
+  background: linear-gradient(180deg, var(--tile-bg-top), #202328);
+  transform-origin: 50% 100%;
+
+  > span {
+    top: 0;
+  }
+}
+
+.flap__half--bottom {
+  bottom: 0;
+  border-radius: 0 0 0.1em 0.1em;
+  background: linear-gradient(180deg, #17191d, var(--tile-bg-bottom));
+  transform-origin: 50% 0;
+
+  > span {
+    bottom: 0;
+  }
+}
+
+.flap__leaf {
+  z-index: 3;
+}
+
+.flap__leaf.flap__half--top {
+  box-shadow: 0 -0.02em 0 rgb(255 255 255 / 4%) inset;
+}

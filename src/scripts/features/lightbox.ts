@@ -1,17 +1,19 @@
-"use strict";
+import { prefersReducedMotion } from "../core/dom";
 
-window.addEventListener("DOMContentLoaded", () => {
-  if (typeof window.baguetteBox === "undefined") {
+// Screenshots open full screen and close only through the close button:
+// backdrop clicks, swipes, and Escape are intentionally ignored.
+export function initLightbox(): void {
+  const baguetteBox = window.baguetteBox;
+
+  if (!baguetteBox) {
     return;
   }
 
-  const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-
-  window.baguetteBox.run(".project-visual", {
-    animation: prefersReducedMotion ? false : "fadeIn",
+  baguetteBox.run(".case__visual", {
+    animation: prefersReducedMotion() ? false : "fadeIn",
     captions: false,
     noScrollbars: true,
-    overlayBackgroundColor: "rgba(7, 8, 10, 0.96)"
+    overlayBackgroundColor: "rgba(10, 11, 13, 0.94)",
   });
 
   const overlay = document.getElementById("baguetteBox-overlay");
@@ -42,4 +44,4 @@ window.addEventListener("DOMContentLoaded", () => {
     event.preventDefault();
     event.stopImmediatePropagation();
   }, true);
-});
+}

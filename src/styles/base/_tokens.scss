@@ -1,10 +1,21 @@
+@use "../abstracts" as *;
+
+// Light is the base theme; `data-theme="dark"` on <html> switches the page
+// surface to dark. "Paper" always means the page surface and "ink" the
+// always-dark UI such as the mobile menu.
 :root {
   color-scheme: light;
 
   // Surfaces
   --paper: #f2eee6;
   --paper-raised: #f8f5ef;
+  --grain: #{$grain-paper};
   --ink: #0e0f12;
+  --panel: var(--ink);
+
+  // Strongest fill on the page surface: primary button, brand mark, hovers.
+  --contrast: var(--ink);
+  --on-contrast: #f3efe7;
 
   // Text on paper
   --text: #121316;
@@ -20,10 +31,12 @@
   --rule-ink: rgb(243 239 231 / 9%);
   --rule-ink-strong: rgb(243 239 231 / 18%);
 
-  // Signal: cobalt on paper, a brighter tint for small marks on ink.
+  // Signal: cobalt fills, a deeper tone for small text on paper, and a
+  // brighter tint for small marks on ink.
   --accent: #2f4bff;
   --accent-deep: #1f33c7;
   --accent-bright: #7a8cff;
+  --mark: var(--accent);
   --navy: #1c2d50;
   --navy-deep: #0c1529;
 
@@ -43,4 +56,25 @@
   // Motion
   --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
   --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
+}
+
+:root[data-theme="dark"] {
+  color-scheme: dark;
+
+  --paper: #0b0c0f;
+  --paper-raised: #17191e;
+  --grain: #{$grain-ink};
+  --panel: #15171b;
+
+  --contrast: #f3efe7;
+  --on-contrast: #0e0f12;
+
+  --text: #f3efe7;
+  --text-muted: #b6b1a7;
+  --text-faint: #8a857b;
+  --rule: rgb(243 239 231 / 9%);
+  --rule-strong: rgb(243 239 231 / 17%);
+
+  --accent-deep: #9aa8ff;
+  --mark: var(--accent-bright);
 }

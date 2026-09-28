@@ -13,12 +13,38 @@
   --cx: 38cqi;
   --cy: 66cqi;
 
+  // Paper plates on a dark foundation.
+  --plate-fill: linear-gradient(135deg, #fdfcf9 0%, #ece5d8 100%);
+  --plate-dots: rgb(18 19 22 / 22%);
+  --plate-border: rgb(18 19 22 / 14%);
+  --plate-edge: #c7bdab;
+  --plate-shadow: rgb(14 15 18 / 12%);
+  --plate-base-fill: linear-gradient(135deg, #2a2d33 0%, #15171a 100%);
+  --plate-base-dots: rgb(255 255 255 / 20%);
+  --plate-base-edge: #07080a;
+  --plate-ui-window: rgb(255 255 255 / 55%);
+  --floor-shadow: rgb(14 15 18 / 20%);
+
   position: relative;
   aspect-ratio: 1 / 0.92;
   container-type: inline-size;
 
   .stack.is-open & {
     --gap: 8.2cqi;
+  }
+
+  // Graphite plates on a paper foundation.
+  @include dark {
+    --plate-fill: linear-gradient(135deg, #2c2f36 0%, #1a1c21 100%);
+    --plate-dots: rgb(255 255 255 / 15%);
+    --plate-border: rgb(255 255 255 / 10%);
+    --plate-edge: #060709;
+    --plate-shadow: rgb(0 0 0 / 45%);
+    --plate-base-fill: linear-gradient(135deg, #f4f0e8 0%, #d9d1c1 100%);
+    --plate-base-dots: rgb(18 19 22 / 22%);
+    --plate-base-edge: #aaa08b;
+    --plate-ui-window: rgb(255 255 255 / 6%);
+    --floor-shadow: rgb(0 0 0 / 60%);
   }
 }
 
@@ -29,7 +55,7 @@
   width: 80cqi;
   height: 30cqi;
   border-radius: 50%;
-  background: radial-gradient(closest-side, rgb(14 15 18 / 20%), rgb(14 15 18 / 0%));
+  background: radial-gradient(closest-side, var(--floor-shadow), transparent);
   transform: translate(-50%, -50%);
   transition: transform 1.2s var(--ease-out);
 
@@ -48,20 +74,24 @@
   transform-style: preserve-3d;
 }
 
+// Plates read their palette from the viewport, so the dark theme can swap it
+// there while plate states below still win on the plate itself.
 .stack__plate {
   --lift: 0cqi;
-  --edge: #c7bdab;
+  --fill: var(--plate-fill);
+  --dots: var(--plate-dots);
+  --edge: var(--plate-edge);
 
   position: absolute;
   inset: 0;
   border-radius: 12%;
   background:
-    radial-gradient(circle, rgb(18 19 22 / 22%) 0 0.22cqi, transparent 0.3cqi) 0 0 / 3.4cqi 3.4cqi,
-    linear-gradient(135deg, #fdfcf9 0%, #ece5d8 100%);
+    radial-gradient(circle, var(--dots) 0 0.22cqi, transparent 0.3cqi) 0 0 / 3.4cqi 3.4cqi,
+    var(--fill);
   box-shadow:
-    inset 0 0 0 1px rgb(18 19 22 / 14%),
+    inset 0 0 0 1px var(--plate-border),
     -1.1cqi 1.1cqi 0 var(--edge),
-    -4cqi 4cqi 6cqi rgb(14 15 18 / 12%);
+    -4cqi 4cqi 6cqi var(--plate-shadow);
   transform: translateZ(calc(var(--i) * var(--gap) + var(--lift)));
   transition:
     transform 1.2s var(--ease-out) calc(var(--i) * 70ms),
@@ -74,20 +104,16 @@
   }
 
   &[data-stack-plate="0"] {
-    --edge: #07080a;
-
-    background:
-      radial-gradient(circle, rgb(255 255 255 / 20%) 0 0.22cqi, transparent 0.3cqi) 0 0 / 3.4cqi 3.4cqi,
-      linear-gradient(135deg, #2a2d33 0%, #15171a 100%);
+    --fill: var(--plate-base-fill);
+    --dots: var(--plate-base-dots);
+    --edge: var(--plate-base-edge);
   }
 
   &.is-active {
     --lift: 3.2cqi;
-    --edge: var(--accent-deep);
-
-    background:
-      radial-gradient(circle, rgb(255 255 255 / 34%) 0 0.22cqi, transparent 0.3cqi) 0 0 / 3.4cqi 3.4cqi,
-      linear-gradient(135deg, #6c81ff 0%, var(--accent) 100%);
+    --fill: linear-gradient(135deg, #6c81ff 0%, var(--accent) 100%);
+    --dots: rgb(255 255 255 / 34%);
+    --edge: color-mix(in oklab, var(--accent) 66%, #000);
 
     .stack__ui {
       stroke: rgb(255 255 255 / 85%);
@@ -105,16 +131,16 @@
   width: 100%;
   height: 100%;
   fill: none;
-  stroke: rgb(18 19 22 / 55%);
+  stroke: color-mix(in oklab, var(--text) 55%, transparent);
   stroke-width: 1;
   vector-effect: non-scaling-stroke;
 
   rect:first-child {
-    fill: rgb(255 255 255 / 55%);
+    fill: var(--plate-ui-window);
   }
 
   rect:not(:first-child) {
-    fill: rgb(18 19 22 / 5%);
+    fill: color-mix(in oklab, var(--text) 5%, transparent);
   }
 
   circle {

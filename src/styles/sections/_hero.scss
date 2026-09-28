@@ -12,7 +12,7 @@
     position: absolute;
     inset: 0;
     z-index: -1;
-    background-image: radial-gradient(rgb(18 19 22 / 17%) 1px, transparent 1.4px);
+    background-image: radial-gradient(color-mix(in oklab, var(--text) 17%, transparent) 1px, transparent 1.4px);
     background-size: 24px 24px;
     -webkit-mask-image: radial-gradient(46% 58% at 80% 44%, #000 0%, transparent 74%);
     mask-image: radial-gradient(46% 58% at 80% 44%, #000 0%, transparent 74%);
@@ -130,6 +130,13 @@
     0 1px 0 rgb(255 255 255 / 8%) inset,
     0 60px 90px -44px rgb(11 20 40 / 75%);
 
+  @include dark {
+    box-shadow:
+      0 1px 0 rgb(255 255 255 / 10%) inset,
+      0 0 0 1px rgb(255 255 255 / 5%),
+      0 60px 90px -44px rgb(0 0 0 / 85%);
+  }
+
   &::before {
     content: "";
     position: absolute;
@@ -181,6 +188,14 @@
   -webkit-backdrop-filter: blur(14px);
   backdrop-filter: blur(14px);
 
+  @include dark {
+    border-color: rgb(255 255 255 / 9%);
+    background: rgb(27 29 34 / 88%);
+    box-shadow:
+      0 28px 60px -22px rgb(0 0 0 / 75%),
+      0 2px 6px rgb(0 0 0 / 30%);
+  }
+
   @include down(xl) {
     left: -10%;
   }
@@ -216,6 +231,13 @@
   letter-spacing: 0.08em;
   text-transform: uppercase;
 
+  @include dark {
+    border-color: rgb(110 226 154 / 26%);
+    background: #12301f;
+    box-shadow: 0 6px 14px -6px rgb(0 0 0 / 55%);
+    color: #6ee29a;
+  }
+
   &::before {
     content: "";
     width: 6px;
@@ -243,7 +265,7 @@
     top: 22px;
     left: 6px;
     height: calc(100% + 2px);
-    border-left: 1.5px dashed rgb(18 19 22 / 28%);
+    border-left: 1.5px dashed color-mix(in oklab, currentColor 28%, transparent);
   }
 }
 
@@ -255,8 +277,7 @@
 }
 
 .trip-card__stop--from {
-  border: 2.5px solid var(--ink);
-  background: #fff;
+  border: 2.5px solid currentColor;
 }
 
 .trip-card__stop--to {
@@ -328,9 +349,9 @@
       color 0.3s ease;
 
     &:hover {
-      border-color: var(--ink);
-      background: var(--ink);
-      color: var(--on-ink);
+      border-color: var(--contrast);
+      background: var(--contrast);
+      color: var(--on-contrast);
     }
   }
 

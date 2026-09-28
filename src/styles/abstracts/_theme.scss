@@ -1,0 +1,6 @@
+// Component overrides for the dark theme (`data-theme="dark"` on <html>).
+@mixin dark {
+  :root[data-theme="dark"] & {
+    @content;
+  }
+}

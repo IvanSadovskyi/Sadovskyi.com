@@ -54,7 +54,7 @@
 
       .button__arrow {
         transform: translateX(3px);
-        background: rgb(255 255 255 / 20%);
+        background: color-mix(in oklab, currentColor 20%, transparent);
       }
     }
   }
@@ -71,7 +71,7 @@
   height: 30px;
   margin-right: -12px;
   border-radius: 50%;
-  background: rgb(255 255 255 / 12%);
+  background: color-mix(in oklab, currentColor 12%, transparent);
   transition:
     transform 0.5s var(--ease-out),
     background-color 0.3s ease;
@@ -84,15 +84,15 @@
 }
 
 .button--ink {
-  --btn-bg: var(--ink);
-  --btn-fg: var(--on-ink);
+  --btn-bg: var(--contrast);
+  --btn-fg: var(--on-contrast);
 }
 
 .button--outline {
   --btn-border: var(--rule-strong);
   --btn-fg: var(--text);
-  --btn-fill: var(--ink);
-  --btn-fg-hover: var(--on-ink);
+  --btn-fill: var(--contrast);
+  --btn-fg-hover: var(--on-contrast);
 }
 
 .button--light {
@@ -140,9 +140,9 @@
 
   @include hover {
     &:hover {
-      background: var(--ink);
-      border-color: var(--ink);
-      color: var(--on-ink);
+      background: var(--contrast);
+      border-color: var(--contrast);
+      color: var(--on-contrast);
       transform: translateY(-2px);
     }
   }

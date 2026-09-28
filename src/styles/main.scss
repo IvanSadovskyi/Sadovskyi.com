@@ -1,4 +1,5 @@
 // Entry point for assets/css/site.css.
+@use "base/fonts";
 @use "base/tokens";
 @use "base/reset";
 @use "base/typography";
@@ -13,6 +14,7 @@
 @use "components/lightbox";
 
 @use "sections/hero";
+@use "sections/route-map";
 @use "sections/board";
 @use "sections/about";
 @use "sections/stack";

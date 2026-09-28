@@ -1,8 +1,7 @@
-.serif {
-  font-family: var(--font-serif);
-  font-style: italic;
-  font-weight: 400;
-  letter-spacing: -0.015em;
+// Second tone inside headlines: same face, lighter and muted.
+.soft {
+  color: var(--text-muted);
+  font-weight: 440;
 }
 
 .dot {

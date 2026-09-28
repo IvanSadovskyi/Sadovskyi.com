@@ -63,13 +63,9 @@
     }
   }
 
-  .word--serif {
-    font-family: var(--font-serif);
-    font-size: 1.1em;
-    font-style: italic;
-    font-weight: 400;
-    letter-spacing: -0.025em;
-    line-height: 0.82;
+  .word--soft {
+    color: var(--text-muted);
+    font-weight: 440;
   }
 }
 
@@ -95,7 +91,8 @@
   }
 }
 
-// Portrait: an arch window with the head rising above its edge.
+// Portrait: the cut-out stands in front of a route map (see _route-map.scss)
+// and dissolves into the page at the bottom.
 .portrait {
   position: relative;
   justify-self: end;
@@ -111,61 +108,21 @@
 .portrait__stage {
   position: relative;
   aspect-ratio: 4 / 5;
-  container-type: inline-size;
 }
 
-.portrait__arch,
-.portrait__clip {
-  position: absolute;
-  inset: 0;
-  border-radius: 50cqi 50cqi 28px 28px;
-}
-
-.portrait__arch {
-  background:
-    radial-gradient(72% 44% at 50% 30%, rgb(86 118 190 / 55%), rgb(86 118 190 / 0%) 72%),
-    radial-gradient(60% 30% at 50% 100%, color-mix(in oklab, var(--accent-bright) 22%, transparent), transparent 70%),
-    linear-gradient(180deg, var(--navy) 0%, var(--navy-deep) 80%);
-  box-shadow:
-    0 1px 0 rgb(255 255 255 / 8%) inset,
-    0 60px 90px -44px rgb(11 20 40 / 75%);
-
-  @include dark {
-    box-shadow:
-      0 1px 0 rgb(255 255 255 / 10%) inset,
-      0 0 0 1px rgb(255 255 255 / 5%),
-      0 60px 90px -44px rgb(0 0 0 / 85%);
-  }
-
-  &::before {
-    content: "";
-    position: absolute;
-    inset: 14px;
-    border: 1px solid rgb(255 255 255 / 10%);
-    border-radius: calc(50cqi - 14px) calc(50cqi - 14px) 16px 16px;
-  }
-}
-
-.portrait__clip {
-  overflow: hidden;
-}
-
-// --mx / --my (-1..1) come from the parallax script. The image extends below
-// the arch so a drift never exposes its cut edge.
-.portrait__img,
-.portrait__pop {
+// --mx / --my (-1..1) come from the parallax script: the person drifts one
+// way, the map and the trip card the other. The photo's cut edge fades out.
+.portrait__img {
   position: absolute;
   bottom: -12px;
   left: 50%;
+  z-index: 1;
   width: 127%;
   max-width: none;
   transform: translateX(-50%);
   translate: calc(var(--mx, 0) * 9px) calc(var(--my, 0) * 7px);
-}
-
-.portrait__pop {
-  clip-path: inset(0 0 84% 0);
-  pointer-events: none;
+  -webkit-mask-image: linear-gradient(180deg, #000 72%, transparent 97%);
+  mask-image: linear-gradient(180deg, #000 72%, transparent 97%);
 }
 
 .trip-card {

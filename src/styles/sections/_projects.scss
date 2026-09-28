@@ -30,7 +30,7 @@
   transform-origin: 50% 0;
 
   @include up(lg) {
-    grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
+    grid-template-columns: minmax(0, 5.5fr) minmax(0, 6.5fr);
     align-items: center;
     gap: clamp(36px, 4.4vw, 72px);
   }
@@ -129,8 +129,8 @@
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 10px 20px;
-  margin-top: 22px;
-  padding-top: 20px;
+  margin-top: 20px;
+  padding-top: 18px;
   border-top: 1px solid var(--rule-ink);
 
   @include down(sm) {
@@ -160,7 +160,7 @@
 
 .case__link {
   min-height: 48px;
-  margin-top: 24px;
+  margin-top: 22px;
 
   @include down(sm) {
     width: 100%;

@@ -16,6 +16,10 @@
     color: var(--accent-bright);
   }
 
+  .soft {
+    color: var(--on-ink-muted);
+  }
+
   // On the dark page a hairline keeps the raised panel readable.
   @include dark {
     --panel-line: rgb(255 255 255 / 6%);

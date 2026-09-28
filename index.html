@@ -9,7 +9,8 @@
   <link rel="icon" href="favicon.ico?v=is-20260926" sizes="16x16 32x32 48x48 64x64 128x128 256x256">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter+Tight:wght@300..800&family=JetBrains+Mono:wght@400..600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400..600&display=swap" rel="stylesheet">
+  <link rel="preload" as="font" type="font/woff2" href="assets/fonts/RethinkSans-latin.woff2" crossorigin>
   <link rel="preload" as="image" href="assets/ivan-sadovskyi-transparent.webp" fetchpriority="high">
   <link rel="stylesheet" href="assets/vendor/baguettebox/baguetteBox.min.css">
   <!-- Styles and scripts are built from src/ (npm run build). -->
@@ -109,8 +110,8 @@
             <span class="word"><span>Business</span></span>
             <span class="word"><span>platforms</span></span>
             <span class="word"><span>for</span></span>
-            <span class="word word--serif"><span>real</span></span>
-            <span class="word word--serif"><span>operations<span class="dot">.</span></span></span>
+            <span class="word word--soft"><span>real</span></span>
+            <span class="word word--soft"><span>operations<span class="dot">.</span></span></span>
           </h1>
           <p class="hero__lead" data-hero-item>I build business systems for transportation, reservations, pricing, dispatch, partners, payments, and AI-assisted operations. My work sits where architecture and daily operations have to stay aligned.</p>
           <div class="hero__actions" aria-label="Contact links" data-hero-item>
@@ -128,11 +129,42 @@
 
         <figure class="portrait" aria-label="Ivan Sadovskyi portrait" data-hero-portrait>
           <div class="portrait__stage">
-            <div class="portrait__arch" aria-hidden="true"></div>
-            <div class="portrait__clip">
-              <img class="portrait__img" src="assets/ivan-sadovskyi-transparent.webp" alt="Ivan Sadovskyi" width="1600" height="1778" fetchpriority="high" decoding="async">
+            <div class="portrait__map" aria-hidden="true">
+              <svg class="route-map" viewBox="0 0 400 400" focusable="false">
+                <defs>
+                  <pattern id="map-streets" width="26" height="20" patternUnits="userSpaceOnUse" patternTransform="rotate(-29)">
+                    <path class="route-map__street" d="M0 0.3H26M0.3 0V20"/>
+                  </pattern>
+                  <pattern id="map-avenues" width="104" height="80" patternUnits="userSpaceOnUse" patternTransform="rotate(-29)">
+                    <path class="route-map__avenue" d="M0 0.5H104M0.5 0V80"/>
+                  </pattern>
+                  <filter id="map-glow" x="-20%" y="-20%" width="140%" height="140%">
+                    <feGaussianBlur stdDeviation="4"/>
+                  </filter>
+                </defs>
+                <rect width="400" height="400" fill="url(#map-streets)"/>
+                <rect width="400" height="400" fill="url(#map-avenues)"/>
+                <path class="route-map__water" d="M14 -20C44 70 2 150 22 232S80 356 42 430"/>
+                <path class="route-map__boulevard" d="M-20 300L420 78"/>
+                <rect class="route-map__park" x="58" y="42" width="72" height="40" transform="rotate(-29 94 62)"/>
+                <circle class="route-map__car" cx="104" cy="96" r="2.2"/>
+                <circle class="route-map__car" cx="318" cy="58" r="2.2"/>
+                <circle class="route-map__car" cx="368" cy="140" r="2.2"/>
+                <circle class="route-map__car" cx="44" cy="150" r="2.2"/>
+                <path class="route-map__route-glow" d="M66 190L271.2 76.3L334.3 190.1"/>
+                <path class="route-map__route" d="M66 190L271.2 76.3L334.3 190.1"/>
+                <circle class="route-map__from" cx="66" cy="190" r="5.5"/>
+                <circle class="route-map__pulse" cx="334.3" cy="190.1" r="7"/>
+                <circle class="route-map__to" cx="334.3" cy="190.1" r="6"/>
+                <g class="route-map__vehicle">
+                  <circle r="7"/>
+                  <circle r="3"/>
+                  <animateMotion dur="7s" repeatCount="indefinite" calcMode="linear" keyPoints="0;1;1" keyTimes="0;0.8;1" path="M66 190L271.2 76.3L334.3 190.1"/>
+                  <animate attributeName="opacity" dur="7s" repeatCount="indefinite" values="0;1;1;0;0" keyTimes="0;0.06;0.8;0.9;1"/>
+                </g>
+              </svg>
             </div>
-            <img class="portrait__pop" src="assets/ivan-sadovskyi-transparent.webp" alt="" aria-hidden="true" width="1600" height="1778" decoding="async">
+            <img class="portrait__img" src="assets/ivan-sadovskyi-transparent.webp" alt="Ivan Sadovskyi" width="1600" height="1778" fetchpriority="high" decoding="async">
           </div>
           <div class="trip-card" aria-hidden="true">
             <span class="trip-card__status">Aligned</span>
@@ -213,7 +245,7 @@
       <div class="container">
         <header class="section-head">
           <p class="section-head__index reveal"><span>01</span>About</p>
-          <h2 class="section-head__title reveal" id="about-title">Operator mindset, <span class="serif">engineering depth<span class="dot">.</span></span></h2>
+          <h2 class="section-head__title reveal" id="about-title">Operator mindset, <span class="soft">engineering depth<span class="dot">.</span></span></h2>
           <p class="section-head__lead reveal" style="--reveal-delay: 120ms">I am not just building pages around a business. I build the operating layer behind the business: the data model, the workflows, the pricing logic, the portals, the integrations, the payment flow, and the tooling that lets people actually run the company.</p>
         </header>
 
@@ -284,7 +316,7 @@
       <div class="container">
         <header class="section-head section-head--ink">
           <p class="section-head__index reveal"><span>02</span>Selected projects</p>
-          <h2 class="section-head__title reveal" id="projects-title">Platforms with <span class="serif">business weight</span> behind them<span class="dot">.</span></h2>
+          <h2 class="section-head__title reveal" id="projects-title">Platforms with <span class="soft">business weight</span> behind them<span class="dot">.</span></h2>
           <p class="section-head__lead reveal" style="--reveal-delay: 120ms">These projects span transportation aggregation, reservation and operations ecosystems, group travel infrastructure, service-business platforms, and a direct-to-consumer business I built and operated in Ukraine.</p>
         </header>
 
@@ -486,7 +518,7 @@
       <div class="container">
         <header class="section-head">
           <p class="section-head__index reveal"><span>03</span>Capabilities</p>
-          <h2 class="section-head__title reveal" id="capabilities-title">What I bring <span class="serif">to a business<span class="dot">.</span></span></h2>
+          <h2 class="section-head__title reveal" id="capabilities-title">What I bring <span class="soft">to a business<span class="dot">.</span></span></h2>
           <p class="section-head__lead reveal" style="--reveal-delay: 120ms">The value is not a list of libraries. It is the ability to understand a messy operation, model it correctly, ship the software, and keep improving it under real production pressure.</p>
         </header>
 
@@ -535,7 +567,7 @@
       <div class="contact__glow" aria-hidden="true"></div>
       <div class="container contact__inner">
         <p class="section-head__index reveal"><span>04</span>Contact</p>
-        <h2 class="contact__title reveal" id="contact-title">For transportation, travel, and <span class="serif">service-business</span> conversations<span class="dot">.</span></h2>
+        <h2 class="contact__title reveal" id="contact-title">For transportation, travel, and <span class="soft">service-business</span> conversations<span class="dot">.</span></h2>
         <p class="contact__lead reveal" style="--reveal-delay: 120ms">If you are evaluating a partner, a platform, a travel workflow, or a business system, email is the cleanest place to start.</p>
         <a class="contact__email reveal" href="mailto:ivan@azeum.com" style="--reveal-delay: 200ms">
           <span class="contact__email-text">ivan@azeum.com</span>

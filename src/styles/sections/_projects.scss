@@ -175,10 +175,6 @@
   @include down(lg) {
     order: -1;
   }
-
-  @include up(lg) {
-    margin-right: calc(-1 * var(--pad) - 10%);
-  }
 }
 
 // Screenshot in a browser frame. An empty overlay link opens the lightbox so
@@ -210,18 +206,13 @@
     0 0 0 1px rgb(255 255 255 / 11%),
     0 50px 100px -30px rgb(0 0 0 / 75%),
     0 30px 80px -40px color-mix(in oklab, var(--hue) 60%, transparent);
-  transition: transform 0.7s var(--ease-out);
-
-  @include up(lg) {
-    border-radius: 14px 0 0 14px;
-  }
+  transition:
+    transform 0.7s var(--ease-out),
+    scale 0.9s var(--ease-out);
 
   img {
     width: 100%;
-    aspect-ratio: 16 / 10;
-    object-fit: cover;
-    object-position: top center;
-    transition: transform 0.9s var(--ease-out);
+    height: auto;
   }
 }
 
@@ -299,10 +290,8 @@
   .shot:hover {
     .shot__frame {
       transform: translateY(-6px);
-    }
-
-    img {
-      transform: scale(1.025);
+      // Zoom the complete frame so the screenshot edges stay visible.
+      scale: 1.025;
     }
 
     .shot__hint {

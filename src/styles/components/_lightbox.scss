@@ -44,8 +44,9 @@
     svg {
       top: 50%;
       left: 50%;
-      width: 24px;
-      height: 24px;
+      // The vendor SVG has no viewBox, so keep its native 30px viewport.
+      width: 30px;
+      height: 30px;
       transform: translate(-50%, -50%);
     }
   }
